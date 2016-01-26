@@ -15,6 +15,18 @@ var spinner = require('./spinner');
 // var draggie = new draggabilly('.js-dialogue', {});
 
 
+// obtains css selector version of a class name
+function gS (className) {
+  return '.' + className;
+}
+
+
+// obtain event namespaced
+function gEvtNs (eventName) {
+  return eventName + '.grid';
+}
+
+
 /**
  * requirements
  * draggable with custom actions
@@ -100,7 +112,7 @@ Dialogue.prototype.create = function(options) {
 		// mousedown outside of dialogue
 		// down used because when clicking and dragging an input value will
 		// close it
-		$(document).off('mouseup.dialogue').on('mousedown.dialogue', function(event) {
+		$(document).off('mousedown.dialogue').on('mousedown.dialogue', function(event) {
 			if (!$(event.target).closest('.js-dialogue').length) {
 				data.close(data);
 			}
@@ -233,7 +245,7 @@ Dialogue.prototype.close = function(data) {
 	// cleanse events
 	$(document)
 		.off('keyup.dialogue')
-		.off('mouseup.dialogue');
+		.off('mousedown.dialogue');
 };
 
 
