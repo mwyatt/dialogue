@@ -1,6 +1,4 @@
 var mustache = require('mustache');
-var keyCode = require('./keyCode');
-var getMotionEventName = require('./utility/getMotionEventName');
 var data;
 var $dialogue;
 var $dialogueContainer;
@@ -11,6 +9,35 @@ var intPopWidth;
 var intWindowWidth;
 var css = {};
 var spinner = require('./spinner');
+var keyCode = {
+	esc: 27
+};
+var getMotionEventName = function (type) {
+    var t;
+    var el = document.createElement('fakeelement');
+    var map = {};
+    if (type == 'transition') {
+      map = {
+        'transition':'transitionend',
+        'OTransition':'oTransitionEnd',
+        'MozTransition':'transitionend',
+        'WebkitTransition':'webkitTransitionEnd'
+      }
+    } else if (type == 'animation') {
+      map = {
+        'animation':'animationend',
+        'OAnimation':'oAnimationEnd',
+        'MozAnimation':'animationend',
+        'WebkitAnimation':'webkitAnimationEnd'
+      }
+    };
+
+    for(t in map){
+        if( el.style[t] !== undefined ){
+            return map[t];
+        }
+    }
+};
 // var draggabilly = require('draggabilly');
 // var draggie = new draggabilly('.js-dialogue', {});
 
@@ -34,7 +61,11 @@ function gEvtNs (eventName) {
  * can be simple message 'ok'
  * can be ok / cancel with callback
  */
-var Dialogue = function () {};
+var Dialogue = function (options) {
+	var defaults = {
+		mstTemplate: '#mst-dialogue', // the mustache template for ui
+	};
+};
 
 
 /**
