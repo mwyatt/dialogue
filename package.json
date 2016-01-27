@@ -1,0 +1,19 @@
+{
+  "name": "dialogue",
+  "version": "1.0.0",
+  "description": "flexible js dialogue for use anywhere",
+  "main": "dialogue.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mwyatt/dialogue.git"
+  },
+  "author": "Martin Wyatt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mwyatt/dialogue/issues"
+  },
+  "homepage": "https://github.com/mwyatt/dialogue#readme"
+}
