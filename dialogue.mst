@@ -1,4 +1,4 @@
-<div class="dialogue-container js-dialogue-container">
+<div class="dialogue-container js-dialogue-container {{className}}">
 
 {{#mask}}
 

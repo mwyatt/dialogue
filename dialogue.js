@@ -1,17 +1,17 @@
 var mustache = require('mustache');
-var data;
-var $dialogue;
-var $dialogueContainer;
-var $dialogueHtml;
-var $dialogueMask;
-var calculatedLeft;
-var intPopWidth;
-var intWindowWidth;
-var css = {};
-var spinner = require('./spinner');
+var templateContainer;
 var keyCode = {
 	esc: 27
 };
+var classNames = {
+	container: 'js-dialogue-container',
+	dialogue: 'js-dialogue',
+	dialogueHtml: 'js-dialogue-html',
+	dialogueMask: 'js-dialogue-mask'
+};
+
+
+// will this be needed?
 var getMotionEventName = function (type) {
     var t;
     var el = document.createElement('fakeelement');
@@ -43,28 +43,17 @@ var getMotionEventName = function (type) {
 
 
 // obtains css selector version of a class name
+// how can this be done better?
 function gS (className) {
   return '.' + className;
 }
 
 
-// obtain event namespaced
-function gEvtNs (eventName) {
-  return eventName + '.grid';
-}
+var Dialogue = function () {};
 
 
-/**
- * requirements
- * draggable with custom actions
- * built each time mustache
- * can be simple message 'ok'
- * can be ok / cancel with callback
- */
-var Dialogue = function (options) {
-	var defaults = {
-		mstTemplate: '#mst-dialogue', // the mustache template for ui
-	};
+Dialogue.prototype.setTemplateContainer = function(html) {
+	templateContainer = html;
 };
 
 
@@ -75,16 +64,18 @@ var Dialogue = function (options) {
  */
 Dialogue.prototype.create = function(options) {
 	var defaults = {
-		mstTemplate: '#mst-dialogue', // the mustache template for ui
-		hardClose: false, // make it difficult to close the dialogue
-		mask: false, // mask the page below
-		className: '', // foo-bar
-		positionTo: '', // .selector
-		width: false, // int
-		html: '', // raw html to be placed in to body area, under description
+		templateContainer: '', // the mustache template container html
+		className: '', // to identify the dialogue uniquely
+
+		// optional
 		title: '',
 		description: '',
-		ajaxConfig: false,
+		positionTo: '', // .selector where the dialogue will appear
+		hardClose: false, // make it difficult to close the dialogue
+		mask: false, // mask the page below
+		width: false, // int
+		html: '', // raw html to be placed in to body area, under description
+		ajaxConfig: false, // ajax - type, url, dataType, data, success, error
 		actions: [
 		  // {name: 'Cancel', action: function() {
 		  //   console.log('Cancel');
@@ -93,28 +84,29 @@ Dialogue.prototype.create = function(options) {
 		  //   console.log('Ok');
 		  // }}
 		],
-		onComplete: function() {}, // when dialogue has been rendered fully
-		onClose: function() {} // when dialogue has been closed fully (animationend)
+		onComplete: function() {}, // fired when dialogue has been rendered
+		onClose: function() {} // fired when dialogue has been closed
 	};
 	this.options = $.extend(defaults, options);
+	this.$container;
 
-	// store globally
-	data = this;
-	css['max-width'] = data.options.width;
+	this.cssSettings = {};
+	this.cssSettings['max-width'] = data.options.width;
 
-	// render
-	$('body').append(mustache.render($(data.options.mstTemplate).html(), data.options));
+	this.dialogueRender = mustache.render(templateContainer, this.options);
+
+	$('body').append(this.dialogueRender);
 
 	// store dom objects
-	$dialogue = $('.js-dialogue');
-	$dialogueContainer = $('.js-dialogue-container');
-	$dialogueHtml = $('.js-dialogue-html');
+	this.$container = $(gS(classNames.container) + gS(this.options.className));
+	this.$dialogue = this.$container.find('.js-dialogue');
+	this.$dialogueHtml = this.$container.find('.js-dialogue-html');
 	if (data.options.mask) {
-		$dialogueMask = $('.js-dialogue-mask');
+		this.$dialogueMask = this.$container.find('.js-dialogue-mask');
 	};
 
 	// set width
-	$dialogue.css(css);
+	this.$dialogue.css(this.cssSettings);
 
 	// position
 	positionThings();
@@ -129,7 +121,7 @@ Dialogue.prototype.create = function(options) {
 	if (!data.options.hardClose) {
 
 		// clicking dialogue
-		$dialogue.on('click.dialogue', function(event) {
+		this.$dialogue.on('click.dialogue', function(event) {
 			event.stopPropagation();
 		});
 
@@ -179,7 +171,7 @@ function positionThings () {
 	};
 
 	// position container
-	$dialogueContainer.css({
+	this.$container.css({
 		top: frame.positionVertical
 	});
 
@@ -189,41 +181,41 @@ function positionThings () {
 		// calc top
 		var target = {
 			position: 'absolute',
-			top: parseInt($positionalElement.offset().top) - parseInt($dialogueContainer.offset().top),
+			top: parseInt($positionalElement.offset().top) - parseInt(this.$container.offset().top),
 			left: $positionalElement.offset().left
 		};
 
 		// left out of viewport to the right adjust
-		if ((target.left + $dialogue.width()) > frame.width) {
+		if ((target.left + this.$dialogue.width()) > frame.width) {
 			target.left = frame.width - 50;
-			target.left = target.left - $dialogue.width();
+			target.left = target.left - this.$dialogue.width();
 		};
 
 		// position
-		css = target;
+		this.cssSettings = target;
 
 	// no positional element so center to window
 	} else {
-		css.position = 'relative';
-		css.margin = '0 auto';
-		css.left = 'auto';
+		this.cssSettings.position = 'relative';
+		this.cssSettings.margin = '0 auto';
+		this.cssSettings.left = 'auto';
 
 		// center vertically if there is room
 		// otherwise send to top and then just scroll
-		if ($dialogue.height() < frame.height) {
-			css.top = (frame.height / 2) - ($dialogue.height() / 2) - 20;
+		if (this.$dialogue.height() < frame.height) {
+			this.cssSettings.top = (frame.height / 2) - (this.$dialogue.height() / 2) - 20;
 		} else {
-			css.top = 0;
+			this.cssSettings.top = 0;
 		};
 	};
 
 	// position it
-	$dialogue.css(css);
+	this.$dialogue.css(this.cssSettings);
 }
 
 
 function setDialogueActionEvent (action) {
-	$dialogue
+	this.$dialogue
 		.find('.js-dialogue-action-' + action.name).on('click.dialogue', function() {
 			action.action.call();
 		});
@@ -236,7 +228,7 @@ function setDialogueActionEvent (action) {
  */
 function ajaxCall () {
 	var config = data.options.ajaxConfig;
-	var spin = new spinner($dialogueHtml);
+	var spin = new spinner(this.$dialogueHtml);
 	positionThings();
 	$.ajax({
 		type: config.type,
@@ -265,10 +257,10 @@ function ajaxCall () {
  */
 Dialogue.prototype.close = function(data) {
 	var removeClassName = 'dialogue-remove';
-	$dialogueContainer.addClass(removeClassName);
-	// $dialogue.on(getMotionEventName('animation'), function() {
+	this.$container.addClass(removeClassName);
+	// this.$dialogue.on(getMotionEventName('animation'), function() {
 	// });
-	$dialogueContainer.remove();
+	this.$container.remove();
 
 	// not after anim because sometimes no anim
 	data.options.onClose.call();
