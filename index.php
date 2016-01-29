@@ -2,10 +2,19 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Dialogue</title>
+	<link rel="stylesheet" href="asset/common.css">
 </head>
 <body>
 	<h1>Dialogue</h1>
-	<script id="mst-dialogue" type="x-tmpl-mustache"><?php echo file_get_contents('dialogue.mst') ?></script>
+	<ul>
+
+<?php foreach ([1, 2, 3, 4, 5, 6] as $key): ?>
+	
+		<li><span class="link-primary js-dialogue-<?php echo $key ?>">Open</span></li>
+
+<?php endforeach ?>
+	
+	</ul>
 	<script src="asset/common.js"></script>
 </body>
 </html>
