@@ -18,7 +18,7 @@ $('.js-dialogue-1').on('click', function() {
     description: 'Positioned to the window and fixed, this masks the current window.',
     actions: {
       'Cancel': function() {
-        console.log('Cancel');
+        this.close();
       },
       'Ok': function() {
         console.log('Ok');
@@ -59,7 +59,7 @@ $('.js-dialogue-3').on('click', function() {
     description: 'Harder than usual to close.',
     actions: {
       'Close': function() {
-        dialogue3.close(dialogue3);
+        this.close();
       }
     }
   });

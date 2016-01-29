@@ -32,7 +32,7 @@ var defaultOptions = {
 	cssAnimation: false // to tell close whether to check for animation end? still a problem with browser compatibility
 };
 
-var templateContainer = '<div class="dialogue-container js-dialogue-container {{className}}">{{#mask}}	<div class="dialogue-mask js-dialogue-mask {{#className}}{{className}}-mask{{/className}}"></div>{{/mask}}<div class="dialogue js-dialogue {{#className}}{{className}}-dialogue{{/className}}"><span class="dialogue-close js-dialogue-close">&times;</span>{{#title}}<h6 class="dialogue-title">{{title}}</h6>{{/title}}{{#description}}<p class="dialogue-description">{{description}}</p>{{/description}}<div class="dialogue-html js-dialogue-html">{{{html}}}</div><div class="dialogue-actions">{{#actions}}<span class="button-primary dialogue-action js-dialogue-action-{{name}}" data-name="{{name}}">{{name}}</span>{{/actions}}</div></div></div>';
+var templateContainer = '<div class="dialogue-container js-dialogue-container {{className}}">{{#mask}}	<div class="dialogue-mask js-dialogue-mask {{#className}}{{className}}-mask{{/className}}"></div>{{/mask}}<div class="dialogue js-dialogue {{#className}}{{className}}-dialogue{{/className}}"><span class="dialogue-close js-dialogue-close">&times;</span>{{#title}}<h6 class="dialogue-title">{{title}}</h6>{{/title}}{{#description}}<p class="dialogue-description">{{description}}</p>{{/description}}<div class="dialogue-html js-dialogue-html">{{{html}}}</div><div class="dialogue-actions">{{#actionNames}}<span class="button-primary dialogue-action js-dialogue-action" data-name="{{.}}">{{.}}</span>{{/actionNames}}</div></div></div>';
 
 var keyCode = {
 	esc: 27
@@ -94,6 +94,14 @@ Dialogue.prototype.setTemplateContainer = function(html) {
 Dialogue.prototype.create = function(options) {
 	this.options = $.extend(defaultOptions, options);
 	this.options.className = this.options.className ? this.options.className : getRandomString();
+
+	if (this.options.actions) {
+		this.options.actionNames = [];
+		for (var actionName in this.options.actions) {
+			this.options.actionNames.push(actionName);
+		};
+	};
+
 	$('body').append(mustache.render(templateContainer, this.options));
 	this.$container = $(gS(classNames.container) + gS(this.options.className));
 	this.$dialogue = this.$container.find(gS(classNames.dialogue));
@@ -168,20 +176,19 @@ Dialogue.prototype.setEvents = function(event) {
 
 	// option actions [ok, cancel]
 	var actions = event.data.options.actions;
-	$document.on('click.dialogue.action', '.selector', function(event) {
-		event.preventDefault();
-		/* Act on the event */
-	});
-	if (actions.length) {
-		for (var actionName = actions) {
-			event.data.$dialogue.find('.js-dialogue-action-' + actionName)
-				.off('click.dialogue.action')
-				.on('click.dialogue.action', function() {
-					actions[actionName].call();
-				});
-		}
+	$document.off('click.dialogue.action');
+	if (actions) {
+		for (var actionName in actions) {
+			event.data.setActionEvent(event, actionName, actions[actionName]);
 		};
 	};
+};
+
+
+Dialogue.prototype.setActionEvent = function(event, actionName, actionFunction) {
+	$document.on('click.dialogue.action', '.js-dialogue-action[data-name="' + actionName + '"]', event.data, function(event) {
+		actionFunction.call(event.data);
+	});
 };
 
 
@@ -244,7 +251,7 @@ Dialogue.prototype.applyCss = function(event) {
  * @param  {object} data 
  * @return {null}      
  */
-Dialogue.prototype.close = function(event) {
+Dialogue.prototype.closeWithEvent = function(event) {
 
 	// remove after animation (issue with if there was no animation)
 	// var removeClassName = 'dialogue-remove';
@@ -253,6 +260,12 @@ Dialogue.prototype.close = function(event) {
 
 	event.data.$container.remove();
 	event.data.options.onClose.call();
+};
+
+
+Dialogue.prototype.close = function() {
+	this.$container.remove();
+	this.options.onClose.call();
 };
 
 
