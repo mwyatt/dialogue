@@ -65,7 +65,6 @@ Dialogue.prototype.create = function(options) {
 		mask: false, // mask the page below
 		width: false, // int
 		html: '', // raw html to be placed in to body area, under description
-		ajaxConfig: false, // ajax - type, url, dataType, data, success, error
 		actions: {
 		  // 'Cancel': function() {
 		  //   this.close();
@@ -78,6 +77,7 @@ Dialogue.prototype.create = function(options) {
 		onClose: function() {}, // fired when dialogue has been closed
 
 		// proposed
+		ajaxConfig: false, // ajax - type, url, dataType, data, success, error
 		cssAnimation: false // to tell close whether to check for animation end? still a problem with browser compatibility
 	};
 	this.options = $.extend(defaultOptions, options);
