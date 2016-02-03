@@ -1,6 +1,6 @@
 {
   "name": "dialogue",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "flexible js dialogue for use anywhere",
   "main": "dialogue.js",
   "scripts": {
