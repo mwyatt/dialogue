@@ -227,7 +227,7 @@ Dialogue.prototype.applyCss = function(event) {
 		// bring it back in plus 50px padding
 		if ((cssSettings.left + event.data.$dialogue.width()) > frame.width) {
 			cssSettings.left = frame.width - 50;
-			cssSettings.left = cssSettings.left - event.data.$dialogue.width();
+			cssSettings.left = cssSettings.left - cssSettings['max-width'];
 		};
 
 	// no positional element so center to window
