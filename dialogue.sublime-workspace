@@ -11,7 +11,15 @@
 			"file": "gulpfile.js",
 			"settings":
 			{
-				"buffer_size": 772,
+				"buffer_size": 1432,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "common.css",
+			"settings":
+			{
+				"buffer_size": 291,
 				"line_ending": "Windows"
 			}
 		},
@@ -19,7 +27,7 @@
 			"file": "package.json",
 			"settings":
 			{
-				"buffer_size": 1451,
+				"buffer_size": 964,
 				"line_ending": "Unix"
 			}
 		}
@@ -105,15 +113,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 772,
+						"buffer_size": 1432,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								772
+								1432,
+								1432
 							]
 						],
 						"settings":
@@ -131,19 +139,47 @@
 				},
 				{
 					"buffer": 1,
-					"file": "package.json",
+					"file": "common.css",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1451,
+						"buffer_size": 291,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								951,
-								1360
+								69,
+								69
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "package.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 964,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								964,
+								964
 							]
 						],
 						"settings":
@@ -156,7 +192,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -211,12 +247,16 @@
 		"selected_items":
 		[
 			[
-				"pack",
-				"package.json"
+				"common",
+				"common.css"
 			],
 			[
 				"gulp",
 				"gulpfile.js"
+			],
+			[
+				"pack",
+				"package.json"
 			],
 			[
 				"pakca",
@@ -282,7 +322,7 @@
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": true,
+	"side_bar_visible": false,
 	"side_bar_width": 150.0,
 	"status_bar_visible": true,
 	"template_settings":
