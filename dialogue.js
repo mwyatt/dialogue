@@ -221,7 +221,7 @@ Dialogue.prototype.applyCss = function(event) {
 		// calc top
 		cssSettings.position = 'absolute';
 		cssSettings.top = parseInt($positionalElement.offset().top) - parseInt(event.data.$container.offset().top);
-		cssSettings.left = $positionalElement.offset().left;
+		cssSettings.left = parseInt($positionalElement.offset().left);
 
 		// if the right side of the dialogue is poking out of the frame then
 		// bring it back in plus 50px padding
