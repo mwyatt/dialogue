@@ -1,6 +1,6 @@
 {
   "name": "mwyatt-dialogue",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "flexible js dialogue for use anywhere",
   "main": "dialogue.js",
   "scripts": {},
