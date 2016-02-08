@@ -4,7 +4,7 @@ var mustache = require('mustache');
 var $document = $(document);
 var $window = $(window);
 
-var templateContainer = '<div class="dialogue-container js-dialogue-container {{className}}">{{#mask}}	<div class="dialogue-mask js-dialogue-mask {{#className}}{{className}}-mask{{/className}}"></div>{{/mask}}<div class="dialogue js-dialogue {{#className}}{{className}}-dialogue{{/className}}"><span class="dialogue-close js-dialogue-close">&times;</span>{{#title}}<h6 class="dialogue-title">{{title}}</h6>{{/title}}{{#description}}<p class="dialogue-description">{{description}}</p>{{/description}}<div class="dialogue-html js-dialogue-html">{{{html}}}</div><div class="dialogue-actions">{{#actionNames}}<span class="button-primary dialogue-action js-dialogue-action" data-name="{{.}}">{{.}}</span>{{/actionNames}}</div></div></div>';
+var templateContainer = '<div class="dialogue-container js-dialogue-container {{#className}}{{className}}-container{{/className}}">{{#mask}}	<div class="dialogue-mask js-dialogue-mask {{#className}}{{className}}-mask{{/className}}"></div>{{/mask}}<div class="dialogue js-dialogue {{#className}}{{className}}-dialogue{{/className}}"><span class="dialogue-close js-dialogue-close">&times;</span>{{#title}}<h6 class="dialogue-title">{{title}}</h6>{{/title}}{{#description}}<p class="dialogue-description">{{description}}</p>{{/description}}<div class="dialogue-html js-dialogue-html">{{{html}}}</div><div class="dialogue-actions">{{#actionNames}}<span class="button-primary dialogue-action js-dialogue-action" data-name="{{.}}">{{.}}</span>{{/actionNames}}</div></div></div>';
 
 var keyCode = {
 	esc: 27
@@ -43,7 +43,7 @@ function getRandomString () {
 var Dialogue = function (event) {};
 
 
-// override if you wish to use your own dialogue template
+// override if you wish to use your own template
 Dialogue.prototype.setTemplateContainer = function(html) {
 	templateContainer = html;
 };
@@ -91,7 +91,7 @@ Dialogue.prototype.create = function(options) {
 	};
 
 	$('body').append(mustache.render(templateContainer, this.options));
-	this.$container = $(gS(classNames.container) + gS(this.options.className));
+	this.$container = $(gS(classNames.container) + gS(this.options.className + '-container'));
 	this.$dialogue = this.$container.find(gS(classNames.dialogue));
 	this.$dialogueHtml = this.$container.find(gS(classNames.dialogueHtml));
 
