@@ -225,7 +225,7 @@ Dialogue.prototype.applyCss = function(event) {
 
 		// if the right side of the dialogue is poking out of the frame then
 		// bring it back in plus 50px padding
-		if ((cssSettings.left + event.data.$dialogue.width()) > frame.width) {
+		if ((cssSettings.left + cssSettings['max-width']) > frame.width) {
 			cssSettings.left = frame.width - 50;
 			cssSettings.left = cssSettings.left - cssSettings['max-width'];
 		};
