@@ -148,7 +148,6 @@ Dialogue.prototype.setEvents = function(event) {
 
 		// hit esc
 		$document.on('keyup.dialogue.close', event.data, function(event) {
-			console.log('keyup.dialogue.close');
 			if (event.which == keyCode.esc) {
 				event.data.closeWithEvent(event);
 			} 
@@ -158,7 +157,6 @@ Dialogue.prototype.setEvents = function(event) {
 		// down used because when clicking and dragging an input value will
 		// close it
 		event.data.$container.on('mousedown.dialogue.close', event.data, function(event) {
-			console.log('mousedown.dialogue.close');
 			if (!$(event.target).closest(gS(classNames.dialogue)).length) {
 				event.data.closeWithEvent(event);
 			}
@@ -175,13 +173,11 @@ Dialogue.prototype.setEvents = function(event) {
 
 	// click body means dont close
 	event.data.$container.on('click.dialogue.body', gS(classNames.dialogue), this, function(event) {
-		console.log('click.dialogue.body');
 		event.stopPropagation();
 	});
 
 	// clicking close [x]
 	event.data.$container.on('click.dialogue.close', gS(classNames.dialogueClose), this, function(event) {
-		console.log('click.dialogue.close');
 		event.data.closeWithEvent(event);
 	});
 };
@@ -189,7 +185,6 @@ Dialogue.prototype.setEvents = function(event) {
 
 Dialogue.prototype.setActionEvent = function(event, actionName, actionFunction) {
 	event.data.$container.on('click.dialogue.action', '.js-dialogue-action[data-name="' + actionName + '"]', event.data, function(event) {
-		console.log('click.dialogue.action');
 		actionFunction.call(event.data);
 	});
 };

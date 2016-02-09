@@ -1,14 +1,14 @@
 {
   "name": "mwyatt-dialogue",
   "version": "0.0.8",
-  "description": "flexible js dialogue for use anywhere",
+  "author": "Martin Wyatt <martin.wyatt@gmail.com>",
+  "description": "Flexible js dialogue for use anywhere.",
   "main": "dialogue.js",
   "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mwyatt/dialogue.git"
   },
-  "author": "Martin Wyatt",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/mwyatt/dialogue/issues"
