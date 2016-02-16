@@ -8,7 +8,7 @@
 	<h1>Dialogue</h1>
 	<ul>
 
-<?php foreach ([1, 2, 3, 4, 6] as $key): ?>
+<?php foreach ([1, 2, 3, 4, 5, 6] as $key): ?>
 	
 		<li><span class="link-primary js-dialogue-<?php echo $key ?>">Open Example <?php echo $key ?></span></li>
 

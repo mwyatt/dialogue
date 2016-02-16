@@ -77,25 +77,24 @@ $('.js-dialogue-4').on('click', function() {
 });
 
 // ajax
-// $('.js-dialogue-5').on('click', function() {
-//   dialogue5.create({
-//     mask: true,
-//     width: 250,
-//     ajaxConfig: {
-//       type: 'get',
-//       url: '/dialogue/koala.jpg',
-//       dataType: 'text',
-//       data: {},
-//       success: function(response) {
-//         $('.js-dialogue-html').html(response);
-//         console.log('dialogue5 success', response);
-//       },
-//       error: function(response) {
-//         console.log('dialogue5 error', response);
-//       }
-//     }
-//   });
-// });
+$('.js-dialogue-5').on('click', function() {
+  dialogue5.create({
+    mask: true,
+    width: 250,
+    ajaxConfig: {
+      type: 'get',
+      url: '/dialogue/README.md',
+      dataType: 'text',
+      data: {},
+      success: function(response) {
+        this.$dialogueHtml.html(response);
+      },
+      error: function(response) {
+        console.log('dialogue5 error', response);
+      }
+    }
+  });
+});
 
 // auto width scrollable
 $('.js-dialogue-6').on('click', function() {

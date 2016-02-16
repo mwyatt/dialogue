@@ -76,8 +76,10 @@ Dialogue.prototype.create = function(options) {
 		onComplete: function() {}, // fired when dialogue has been rendered
 		onClose: function() {}, // fired when dialogue has been closed
 
-		// proposed
-		ajaxConfig: false, // ajax - type, url, dataType, data, success, error
+		// jquery ajax object
+		ajaxConfig: false,
+
+	    // proposed
 		cssAnimation: false // to tell close whether to check for animation end? still a problem with browser compatibility
 	};
 	this.options = $.extend(defaultOptions, options);
@@ -104,40 +106,51 @@ Dialogue.prototype.create = function(options) {
 	this.applyCss(event);
 	this.setEvents(event);
 
-	// if (this.options.ajaxConfig) {
-	// 	var config = this.options.ajaxConfig;
-	// 	var isImage;
+	if (this.options.ajaxConfig) {
+		this.handleAjax(event);
 
-	// 	// image or data?
-	// 	if (config.url.indexOf('.jpg') || config.url.indexOf('.gif') || config.url.indexOf('.png')) {
-	// 		isImage = true;
-	// 	};
-
-	// 	// var spin = new spinner(this.$dialogueHtml);
-
-	// 	$.ajax({
-	// 		type: config.type,
-	// 		url: config.url,
-	// 		dataType: config.dataType,
-	// 		data: config.data,
-	// 		complete: function() {
-	// 			event.data.options.onComplete.call();
-	// 			event.data.applyCss(event);
-	// 		},
-	// 		success: function(response) {
-	// 			config.success(response);
-	// 		},
-	// 		error: function(response) {
-	// 			config.error(response);
-	// 		}
-	// 	});
-
-	// // no ajax
-	// } else {
+	// no ajax
+	} else {
 
 		// completed build
 		this.options.onComplete.call();
-	// };
+	};
+};
+
+
+Dialogue.prototype.handleAjax = function(event) {
+  var config = event.data.options.ajaxConfig;
+  var isImage;
+
+  // using a class because cant think of a way to get the ajax loader
+  // inside the plugin, css3 spinner?
+  var ajaxLoadClass = 'dialogue-ajax-is-loading';
+
+  event.data.$container.addClass(ajaxLoadClass);
+	event.data.applyCss(event);
+
+  // image or data?
+  // if (config.url.indexOf('.jpg') || config.url.indexOf('.gif') || config.url.indexOf('.png')) {
+  //   isImage = true;
+  // };
+
+  $.ajax({
+    type: config.type,
+    url: config.url,
+    dataType: config.dataType,
+    data: config.data,
+    complete: function() {
+      event.data.$container.removeClass(ajaxLoadClass);
+			event.data.options.onComplete.call(event.data);
+			event.data.applyCss(event);
+    },
+    success: function(response) {
+      config.success.call(event.data, response);
+    },
+    error: function(response) {
+      config.success.call(event.data, response);
+		}
+	});
 };
 
 
