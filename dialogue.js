@@ -73,6 +73,18 @@ Dialogue.prototype.create = function(options) {
 		  //   console.log('Ok');
 		  // }
 		},
+
+		// new layout which allows for limitless definition of what an action does
+		// should basic actions be removed? yes to keep all consistent
+		actions: [
+			// {
+		 //    name: 'Open',
+		 //    classes: ['button-primary', 'right'],
+		 //    action: function() {
+		    	
+		 //    }
+			// }
+		]
 		onComplete: function() {}, // fired when dialogue has been rendered
 		onClose: function() {}, // fired when dialogue has been closed
 
@@ -113,7 +125,7 @@ Dialogue.prototype.create = function(options) {
 	} else {
 
 		// completed build
-		this.options.onComplete.call();
+		this.options.onComplete.call(event.data);
 	};
 };
 
@@ -281,7 +293,7 @@ Dialogue.prototype.closeWithEvent = function(event) {
 		.off('keyup.dialogue.close');
 	event.data.$container.off(); // needed?
 	event.data.$container.remove();
-	event.data.options.onClose.call();
+	event.data.options.onClose.call(event.data);
 };
 
 
