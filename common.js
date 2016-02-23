@@ -79,6 +79,8 @@ $('.js-dialogue-4').on('click', function() {
 // ajax
 $('.js-dialogue-5').on('click', function() {
   dialogue5.create({
+    title: 'does this appear?',
+    description: 'does this appear?',
     mask: true,
     width: 250,
     ajaxConfig: {
@@ -87,7 +89,7 @@ $('.js-dialogue-5').on('click', function() {
       dataType: 'text',
       data: {},
       success: function(response) {
-        this.$dialogueHtml.html(response);
+        this.setHtml(response);
       },
       error: function(response) {
         console.log('dialogue5 error', response);

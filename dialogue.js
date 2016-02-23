@@ -126,6 +126,7 @@ Dialogue.prototype.create = function(options) {
 
 		// completed build
 		this.options.onComplete.call(event.data);
+		event.data.applyCss(event);
 	};
 };
 
@@ -159,9 +160,11 @@ Dialogue.prototype.handleAjax = function(event) {
     },
     success: function(response) {
       config.success.call(event.data, response);
+			event.data.applyCss(event);
     },
     error: function(response) {
-      config.success.call(event.data, response);
+      config.error.call(event.data, response);
+			event.data.applyCss(event);
 		}
 	});
 };
@@ -220,6 +223,9 @@ Dialogue.prototype.setActionEvent = function(event, actionName, actionFunction) 
 		actionFunction.call(event.data);
 	});
 };
+
+
+
 
 
 // apply the css to the dialogue
@@ -300,6 +306,16 @@ Dialogue.prototype.closeWithEvent = function(event) {
 
 Dialogue.prototype.close = function() {
 	this.closeWithEvent({data: this});
+};
+
+
+Dialogue.prototype.setHtml = function(html) {
+	this.$dialogueHtml.html(html);
+};
+
+
+Dialogue.prototype.reposition = function() {
+	this.applyCss({data: this});
 };
 
 
