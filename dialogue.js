@@ -84,7 +84,7 @@ Dialogue.prototype.create = function(options) {
 		    	
 		 //    }
 			// }
-		]
+		],
 		onComplete: function() {}, // fired when dialogue has been rendered
 		onClose: function() {}, // fired when dialogue has been closed
 
@@ -153,6 +153,7 @@ Dialogue.prototype.handleAjax = function(event) {
     data: config.data,
     complete: function() {
       event.data.$container.removeClass(ajaxLoadClass);
+      // config.complete.call(event.data);
 			event.data.options.onComplete.call(event.data);
 			event.data.applyCss(event);
     },

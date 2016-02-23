@@ -1,3 +1,5 @@
+@mixin clearfix .dialogue-actions;
+
 .dialogue-mask {
     position: fixed;
     top: 0;
@@ -32,6 +34,8 @@
 }
 
 .dialogue-action {
+        float: right;
+        margin-left: 10px;
     cursor: pointer;
 }
 
