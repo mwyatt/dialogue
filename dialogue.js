@@ -271,8 +271,8 @@ Dialogue.prototype.applyCss = function(event) {
 
 		// center vertically if there is room
 		// otherwise send to top and then just scroll
-		if (event.data.$dialogue.height() < frame.height) {
-			cssSettings.top = (frame.height / 2) - (event.data.$dialogue.height() / 2) - 20;
+		if (event.data.$dialogue.height() < event.data.$container.height()) {
+			cssSettings.top = (event.data.$container.height() / 2) - (event.data.$dialogue.height() / 2) - 20;
 		} else {
 			cssSettings.top = 0;
 		};
