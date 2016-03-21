@@ -298,9 +298,13 @@ Dialogue.prototype.closeWithEvent = function(event) {
 	$document
 		// .off('click.dialogue.action')
 		.off('keyup.dialogue.close');
-	event.data.$container.off(); // needed?
-	event.data.$container.remove();
-	event.data.options.onClose.call(event.data);
+
+	// may have never been opened, attempted to close without ever opening
+	if (typeof event.data.$container !== 'undefined') {
+		event.data.$container.off(); // needed?
+		event.data.$container.remove();
+		event.data.options.onClose.call(event.data);
+	}
 };
 
 
