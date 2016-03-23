@@ -113,6 +113,9 @@ Dialogue.prototype.create = function(options) {
 		this.$dialogueMask = this.$container.find(gS(classNames.dialogueMask));
 	};
 
+	if (typeof event == 'undefined') {
+		var event = {};
+	}
 	event.data = this;
 
 	this.applyCss(event);
