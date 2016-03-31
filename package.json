@@ -1,0 +1,37 @@
+{
+  "name": "mwyatt-dialogue",
+  "version": "0.2.2",
+  "author": "Martin Wyatt <martin.wyatt@gmail.com>",
+  "description": "Flexible js dialogue for use anywhere.",
+  "main": "dialogue.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mwyatt/dialogue.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mwyatt/dialogue/issues"
+  },
+  "homepage": "https://github.com/mwyatt/dialogue#readme",
+  "dependencies": {
+    "jquery": "1.11.2",
+    "mustache": "~2.2.1",
+    "mwyatt-codex": "0.0.1"
+  },
+  "devDependencies": {
+    "gulp": "3.9.0",
+    "browserify": "11.2.0",
+    "autoprefixer": "6.0.3",
+    "vinyl-source-stream": "1.1.0",
+    "postcss-mixins": "^1.0.1",
+    "gulp-plumber": "~1.0.1",
+    "gulp-util": "~3.0.7",
+    "gulp-postcss": "^6.0.1",
+    "postcss-color-function": "^2.0.0",
+    "postcss-hexrgba": "^0.2.0",
+    "postcss-import": "^7.0.0",
+    "postcss-simple-vars": "^1.0.1",
+    "es6-promise": "~3.0.2"
+  }
+}
