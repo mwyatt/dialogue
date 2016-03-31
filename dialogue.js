@@ -1,6 +1,5 @@
 var $ = require('jquery');
 var mustache = require('mustache');
-
 var $document = $(document);
 var $window = $(window);
 

@@ -45,3 +45,8 @@ gulp.task('js', function(done) {
     .pipe(source('common.js'))
     .pipe(gulp.dest('asset'));
 });
+
+gulp.task('watch', function () {
+  gulp.watch('*.css', ['css']);
+  gulp.watch('*.js', ['js']);
+});

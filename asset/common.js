@@ -111,7 +111,6 @@ $('.js-dialogue-6').on('click', function() {
 },{"./dialogue":2,"jquery":3}],2:[function(require,module,exports){
 var $ = require('jquery');
 var mustache = require('mustache');
-
 var $document = $(document);
 var $window = $(window);
 
