@@ -15,6 +15,7 @@
   padding: 20px;
   z-index: 2;
   border: 1px solid #cccccc;
+  animation: fadeInTop 300ms forwards;
 }
 
 .dialogue-close {

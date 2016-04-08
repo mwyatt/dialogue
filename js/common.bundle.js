@@ -1,6 +1,5 @@
 var $ = require('jquery');
 var dialogueFactory = require('./dialogue');
-// dialogueFactory.setTemplateContainer($('#mst-dialogue').html());
 var dialogue1 = new dialogueFactory();
 var dialogue2 = new dialogueFactory();
 var dialogue3 = new dialogueFactory();
