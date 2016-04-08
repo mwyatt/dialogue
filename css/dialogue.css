@@ -1,5 +1,3 @@
-@mixin clearfix .dialogue-actions;
-
 .dialogue-mask {
     position: fixed;
     top: 0;

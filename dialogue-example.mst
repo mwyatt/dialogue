@@ -25,7 +25,7 @@
 
 {{#actions}}
 
-			<span class="button-primary dialogue-action js-dialogue-action-{{name}}" data-name="{{name}}">{{name}}</span>
+			<span class="button primary dialogue-action js-dialogue-action-{{name}}" data-name="{{name}}">{{name}}</span>
 
 {{/actions}}
 
