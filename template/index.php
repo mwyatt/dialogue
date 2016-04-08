@@ -5,8 +5,7 @@
 	<link rel="stylesheet" href="asset/common.bundle.css">
 </head>
 <body>
-
-	<h1>Dialogue</h1>
+	<h1 class="site-heading"><a href="#introduction" class="site-heading-link js-smooth-scroll">mwyatt/dialogue</a></h1>
 	<ul>
 
 <?php foreach ([1, 2, 3, 4, 5, 6] as $key): ?>
