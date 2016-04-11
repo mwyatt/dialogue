@@ -9,3 +9,17 @@
 @import 'mwyatt-codex/css/button.css';
 @import 'mwyatt-codex/css/general.css';
 @import 'dialogue.css';
+
+.dialogue-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.dialogue-description {
+    margin: 1em 0;
+    line-height: 1.5;
+}
+
+.dialogue-actions {
+    height: 24px;
+}

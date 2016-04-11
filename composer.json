@@ -1,0 +1,16 @@
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/mwyatt/core"
+        }
+    ],
+    "require": {
+        "mwyatt/core": "2.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mwyatt\\Dialogue\\": ["src", "test"]
+        }
+    }
+}

@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>mwyatt/dialogue</title>
+	<title>Dialogue</title>
 	<link rel="stylesheet" href="asset/common.bundle.css">
 </head>
 <body>
