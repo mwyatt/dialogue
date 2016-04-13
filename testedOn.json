@@ -1,6 +1,7 @@
 {
-    "chrome": 49,
-    "firefox": 45,
-    "ie": 11,
-    "edge": 20
+    "chrome": [49],
+    "firefox": [43, 44, 45],
+    "ie": [9, 11],
+    "edge": [20],
+    "safari": [9]
 }
