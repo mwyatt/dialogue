@@ -8,7 +8,7 @@
 @import 'mwyatt-codex/css/link.css';
 @import 'mwyatt-codex/css/button.css';
 @import 'mwyatt-codex/css/general.css';
-@import 'dialogue.css';
+@import 'default.css';
 
 .dialogue-title {
     font-size: 18px;
