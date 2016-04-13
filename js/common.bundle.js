@@ -1,5 +1,5 @@
 var $ = require('jquery');
-var dialogueFactory = require('./dialogue');
+var dialogueFactory = require('../index');
 var dialogue1 = new dialogueFactory();
 var dialogue2 = new dialogueFactory();
 var dialogue3 = new dialogueFactory();

@@ -5,13 +5,11 @@ $pathBase = (string) (__DIR__ . '/');
 include $pathBase . 'vendor/autoload.php';
 $request = new \Mwyatt\Core\Request;
 
-if ($request->getServer('HTTP_HOST') === '192.168.1.6') {
-	ini_set('display_startup_errors',1);
-	ini_set('display_errors',1);
-	error_reporting(-1);
-}
+ini_set('display_startup_errors',1);
+ini_set('display_errors',1);
+error_reporting(-1);
 
-$url = new \Mwyatt\Core\Url($request->getServer('HTTP_HOST'), $request->getServer('REQUEST_URI'), 'codex/');
+$url = new \Mwyatt\Core\Url($request->getServer('HTTP_HOST'), $request->getServer('REQUEST_URI'), 'dialogue/');
 $view = new \Mwyatt\Core\View;
 $view->prependTemplatePath($pathBase . 'template/');
 $view->setPathBase($pathBase);
