@@ -74,7 +74,6 @@ function js() {
   return gulp.src(settings.js + '**/*.bundle.js', {read: false})
     .pipe(tap(function(file) {
       file.contents = browserify(file.path, {debug: settings.isLocal})
-        .transform('browserify-shim', {global: true})
         .bundle();
       gutil.log('build ' + file.path);
     }))
