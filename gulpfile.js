@@ -67,7 +67,7 @@ function min() {
 
 function watch() {
   gulp.watch(settings.watch.css, ['css']);
-  gulp.watch(settings.watch.js, ['js']);
+  gulp.watch(settings.watch.js, ['index.js']);
 }
 
 function js() {

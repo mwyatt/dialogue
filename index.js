@@ -27,14 +27,6 @@ var gS = function(className) {
   return '.' + className;
 };
 
-function getRandomString() {
-  var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-  for (var i = 0; i < 5; i++)
-  text += possible.charAt(Math.floor(Math.random() * possible.length));
-  return text;
-}
-
 // unchanging events
 // does event pass?
 var Dialogue = function(event) {};
@@ -90,7 +82,6 @@ Dialogue.prototype.create = function(options) {
     cssAnimation: false // to tell close whether to check for animation end? still a problem with browser compatibility
   };
   this.options = $.extend(defaultOptions, options);
-  this.options.className = this.options.className ? this.options.className : getRandomString();
 
   if (this.options.actions) {
     this.options.actionNames = [];
