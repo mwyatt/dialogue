@@ -27,6 +27,14 @@ var gS = function(className) {
   return '.' + className;
 };
 
+function getRandomString() {
+  var text = '';
+  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  for (var i = 0; i < 5; i++)
+  text += possible.charAt(Math.floor(Math.random() * possible.length));
+  return text;
+}
+
 // unchanging events
 // does event pass?
 var Dialogue = function(event) {};
@@ -83,6 +91,9 @@ Dialogue.prototype.create = function(options) {
   };
   this.options = $.extend(defaultOptions, options);
 
+  // need to have a unique classname otherwise it cant be selected
+  this.options.className = this.options.className ? this.options.className : getRandomString();
+
   if (this.options.actions) {
     this.options.actionNames = [];
     for (var actionName in this.options.actions) {
@@ -104,7 +115,6 @@ Dialogue.prototype.create = function(options) {
   }
   event.data = this;
 
-  this.applyCss(event);
   this.setEvents(event);
 
   if (this.options.ajaxConfig) {
@@ -115,7 +125,7 @@ Dialogue.prototype.create = function(options) {
 
     // completed build
     this.options.onComplete.call(event.data);
-    event.data.applyCss(event);
+    event.data.applyCssPosition(event);
   };
 };
 
@@ -128,7 +138,7 @@ Dialogue.prototype.handleAjax = function(event) {
   var ajaxLoadClass = 'dialogue-ajax-is-loading';
 
   event.data.$container.addClass(ajaxLoadClass);
-  event.data.applyCss(event);
+  event.data.applyCssPosition(event);
 
   // image or data?
   // if (config.url.indexOf('.jpg') || config.url.indexOf('.gif') || config.url.indexOf('.png')) {
@@ -144,15 +154,15 @@ Dialogue.prototype.handleAjax = function(event) {
       event.data.$container.removeClass(ajaxLoadClass);
       // config.complete.call(event.data);
       event.data.options.onComplete.call(event.data);
-      event.data.applyCss(event);
+      event.data.applyCssPosition(event);
     },
     success: function(response) {
       config.success.call(event.data, response);
-      event.data.applyCss(event);
+      event.data.applyCssPosition(event);
     },
     error: function(response) {
       config.error.call(event.data, response);
-      event.data.applyCss(event);
+      event.data.applyCssPosition(event);
     }
   });
 };
@@ -178,6 +188,10 @@ Dialogue.prototype.setEvents = function(event) {
       }
     });
   };
+
+  $window.on('scroll.mwyatt-dialogue', function() {
+    console.log('scrolling');
+  });
 
   // option actions [ok, cancel]
   var actions = event.data.options.actions;
@@ -213,21 +227,26 @@ Dialogue.prototype.setActionEvent = function(event, actionName, actionFunction) 
 // apply the css to the dialogue
 // max-width
 // position
-Dialogue.prototype.applyCss = function(event) {
+Dialogue.prototype.applyCssPosition = function(event) {
+  var containerPadding = 20;
   var cssSettings = {};
   cssSettings['max-width'] = event.data.options.width;
 
   // position dialogue
   var $positionalElement = event.data.options.positionTo;
-  var frame = {
-    positionVertical: $(document.body).scrollTop(),
-    height: $window.height(),
+  var clientFrame = {
+    positionVertical: $window[0].pageYOffset,
+    height: $window[0].innerHeight,
     width: $window.width()
   };
 
+  var borderWidth = 1;
+  var paddingWidth = 20;
+  var dialogueHeight = parseInt(event.data.$dialogue.height()) + (paddingWidth * 2) + (borderWidth * 2);
+
   // position container
   event.data.$container.css({
-    top: frame.positionVertical
+    top: clientFrame.positionVertical
   });
 
   // position to element or centrally window
@@ -238,10 +257,10 @@ Dialogue.prototype.applyCss = function(event) {
     cssSettings.top = parseInt($positionalElement.offset().top) - parseInt(event.data.$container.offset().top);
     cssSettings.left = parseInt($positionalElement.offset().left);
 
-    // if the right side of the dialogue is poking out of the frame then
+    // if the right side of the dialogue is poking out of the clientFrame then
     // bring it back in plus 50px padding
-    if ((cssSettings.left + cssSettings['max-width']) > frame.width) {
-      cssSettings.left = frame.width - 50;
+    if ((cssSettings.left + cssSettings['max-width']) > clientFrame.width) {
+      cssSettings.left = clientFrame.width - 50;
       cssSettings.left = cssSettings.left - cssSettings['max-width'];
     };
 
@@ -253,8 +272,8 @@ Dialogue.prototype.applyCss = function(event) {
 
     // center vertically if there is room
     // otherwise send to top and then just scroll
-    if (event.data.$dialogue.height() < event.data.$container.height()) {
-      cssSettings.top = (event.data.$container.height() / 2) - (event.data.$dialogue.height() / 2) - 20;
+    if (dialogueHeight < clientFrame.height) {
+      cssSettings.top = parseInt(clientFrame.height / 2) - parseInt(dialogueHeight / 2) - containerPadding;
     } else {
       cssSettings.top = 0;
     };
@@ -285,6 +304,7 @@ Dialogue.prototype.closeWithEvent = function(event) {
     event.data.$container.off(); // needed?
     event.data.$container.remove();
     event.data.options.onClose.call(event.data);
+    $window.off('scroll.mwyatt-dialogue');
   }
 };
 
@@ -297,7 +317,7 @@ Dialogue.prototype.setHtml = function(html) {
 };
 
 Dialogue.prototype.reposition = function() {
-  this.applyCss({data: this});
+  this.applyCssPosition({data: this});
 };
 
 module.exports = Dialogue;
