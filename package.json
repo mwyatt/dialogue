@@ -16,7 +16,7 @@
   "dependencies": {
     "jquery": "1.11.2",
     "mustache": "~2.2.1",
-    "mwyatt-codex": "1.0.2"
+    "mwyatt-codex": "2.4.0"
   },
   "devDependencies": {
     "autoprefixer": "6.0.3",

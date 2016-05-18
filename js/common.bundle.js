@@ -1,61 +1,25 @@
 var $ = require('jquery');
 var dialogueFactory = require('../index');
-var dialogue1 = new dialogueFactory();
-var dialogue2 = new dialogueFactory();
-var dialogue3 = new dialogueFactory();
-var dialogue4 = new dialogueFactory();
-var dialogue5 = new dialogueFactory();
-var dialogue6 = new dialogueFactory();
+var dialogue = new dialogueFactory();
+var dialogueOk = new dialogueFactory();
 
-// masked
 $('.js-dialogue-1').on('click', function() {
-  dialogue1.create({
-    mask: true,
-    className: 'dialogue-1',
-    width: 200,
-    title: 'Masked',
+  dialogue.create({
+    title: 'Demo Basic',
     description: 'Positioned to the window and fixed, this masks the current window.',
-    actions: {
-      'Cancel': function() {
-        this.close();
-      },
-      'Ok': function() {
-        console.log('Ok');
-      }
-    },
-    onComplete: function() {
-      console.log('dialogue.onComplete');
-    },
-    onClose: function() {
-      console.log('dialogue.onClose');
-    }
+    className: 'dialogue-1',
+    mask: true,
+    width: 290
   });
 });
 
-// positioned
 $('.js-dialogue-2').on('click', function() {
-  dialogue2.create({
+  dialogue.create({
     className: 'dialogue-2',
     positionTo: $('.js-dialogue-2'),
-    width: 200,
-    title: 'Positioned',
-    description: 'This dialogue is positioned to the selector \'.js-dialogue-2\'.',
-    actions: {
-      'Ok': function() {
-        dialogue2.close(dialogue2);
-      }
-    }
-  });
-});
-
-// well-hard only closable via action or cross
-$('.js-dialogue-3').on('click', function() {
-  dialogue3.create({
-    hardClose: true,
-    className: 'dialogue-3',
     width: 250,
-    title: 'Well Hard To Close',
-    description: 'Harder than usual to close.',
+    title: 'Inline Position',
+    description: 'This dialogue is positioned to the selector \'.js-dialogue-2\'.',
     actions: {
       'Close': function() {
         this.close();
@@ -64,21 +28,27 @@ $('.js-dialogue-3').on('click', function() {
   });
 });
 
-// edge case testing
-$('.js-dialogue-4').on('click', function() {
-  dialogue4.create({
-    mask: true,
-    width: 550,
-    title: 'Very large',
-    html: '<p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p><p>Hi</p>'
+$('.js-dialogue-3').on('click', function() {
+  dialogue.create({
+    hardClose: true,
+    className: 'dialogue-3',
+    width: 250,
+    title: 'Hard Close',
+    description: 'Can only be closed using the \'&times;\' icon in the corner.'
   });
 });
 
-// ajax
+$('.js-dialogue-4').on('click', function() {
+  dialogue.create({
+    mask: true,
+    width: 550,
+    title: 'Very large',
+    html: '<p>If it is too large for the window to center in the middle. It will be placed at the top.</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p>'
+  });
+});
+
 $('.js-dialogue-5').on('click', function() {
-  dialogue5.create({
-    title: 'does this appear?',
-    description: 'does this appear?',
+  dialogue.create({
     mask: true,
     width: 250,
     ajaxConfig: {
@@ -96,11 +66,38 @@ $('.js-dialogue-5').on('click', function() {
   });
 });
 
-// auto width scrollable
 $('.js-dialogue-6').on('click', function() {
-  dialogue5.create({
+  dialogue.create({
     mask: true,
     title: '6',
     description: 'auto width and scrollable'
+  });
+});
+
+$('.js-dialogue-7').on('click', function() {
+  dialogue.create({
+    title: 'Actions',
+    description: 'Below are actions which can have callbacks.',
+    mask: true,
+    width: 290,
+    actions: {
+      'Close': function() {
+        this.close();
+      },
+      'Ok': function() {
+        var $buttonOk = $('[data-name="Ok"]');
+        dialogueOk.create({
+          width: 220,
+          positionTo: $buttonOk,
+          title: 'Ok Clicked',
+          description: 'Ok was indeed clicked.',
+          actions: {
+            Close: function() {
+              this.close();
+            }
+          }
+        });
+      }
+    }
   });
 });

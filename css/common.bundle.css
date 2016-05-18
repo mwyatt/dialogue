@@ -10,10 +10,6 @@
 @import 'mwyatt-codex/css/general.css';
 @import 'default.css';
 
-html {
-    height: 2000px;
-}
-
 .dialogue-title {
     font-size: 18px;
     font-weight: 600;
@@ -26,4 +22,19 @@ html {
 
 .dialogue-actions {
     height: 24px;
+}
+
+.demos-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.demo-single {
+    min-width: 300px;
+    max-width: 600px;
+    width: 50%;
+    padding: 1em;
+    flex-grow: 1;
+    border: 1px solid blue;
 }

@@ -1,3 +1,39 @@
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bringIn {
+  from {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+  }
+
+  to {
+    transform: perspective(400px);
+    transform: perspective(400px) rotate3d(1, 1, 0, -5deg);
+  }
+}
+
 .dialogue-mask {
   position: fixed;
   top: 0;
@@ -11,11 +47,12 @@
 .dialogue {
   position: relative;
   background-color: #ffffff;
-  box-shadow: 0 0 3px #cccccc;
+  box-shadow: 0 0 3px rgba(#000, .2);
   padding: 20px;
   z-index: 2;
-  border: 1px solid #cccccc;
-  animation: fadeInTop 300ms forwards;
+  /*border: 1px solid rgba(#000, .2);*/
+  animation: bringIn 500ms forwards;
+  border-radius: var(--border-radius);
 }
 
 .dialogue-close {
@@ -67,13 +104,4 @@
   border-radius: 100%;
   border-width: 4px;
   border-style: solid;
-}
-
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }

@@ -16,7 +16,7 @@
   --color-secondary-2-4: color(var(--color-secondary-2-0) tint(50%));
   --font-family: 'Open Sans', 'Arial', 'sans-serif';
   --font-weight: 400;
-  --font-size: 14px;
+  --font-size: 16px;
   --font-line-height: 1.5;
   --body-color: var(--color-secondary-1-1);
   --selection-color: #ffffff;
@@ -25,6 +25,7 @@
   --heading-color: var(--color-secondary-1-1);
   --font-family-heading: var(--font-family);
   --font-weight-heading: 600;
-  --border-radius: 0;
+  --border-radius: 3px;
   --animation-duration: 250ms; /*needed?*/
+  --background-color: #ccc;
 }
