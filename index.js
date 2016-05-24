@@ -4,7 +4,18 @@ var mustache = require('mustache');
 var $document = $(document);
 var $window = $(window);
 
-var templateContainer = '<div class="dialogue-container js-dialogue-container {{#className}}{{className}}-container{{/className}}">{{#mask}}	<div class="dialogue-mask js-dialogue-mask {{#className}}{{className}}-mask{{/className}}"></div>{{/mask}}<div class="dialogue js-dialogue {{#className}}{{className}}-dialogue{{/className}}"><span class="dialogue-close js-dialogue-close">&times;</span>{{#title}}<h6 class="dialogue-title">{{title}}</h6>{{/title}}{{#description}}<p class="dialogue-description">{{description}}</p>{{/description}}<div class="dialogue-html js-dialogue-html">{{{html}}}</div><div class="dialogue-actions">{{#actionNames}}<button class="button primary dialogue-action js-dialogue-action" data-name="{{.}}">{{.}}</button>{{/actionNames}}</div></div></div>';
+var templateContainer = [
+'<div class="dialogue-container js-dialogue-container {{#className}}{{className}}-container{{/className}}">',
+  '{{#mask}}<div class="dialogue-mask js-dialogue-mask {{#className}}{{className}}-mask{{/className}}"></div>{{/mask}}',
+  '<div class="dialogue js-dialogue {{#className}}{{className}}-dialogue{{/className}}">',
+    '<span class="dialogue-close js-dialogue-close">&times;</span>',
+    '{{#title}}<h6 class="dialogue-title">{{title}}</h6>{{/title}}',
+    '{{#description}}<p class="dialogue-description">{{description}}</p>{{/description}}',
+    '<div class="dialogue-html js-dialogue-html">{{{html}}}</div>',
+    '<div class="dialogue-actions">{{#actionNames}}<button class="button primary dialogue-action js-dialogue-action" data-name="{{.}}">{{.}}</button>{{/actionNames}}</div>',
+  '</div>',
+'</div>'
+].join('');
 
 var keyCode = {
   esc: 27
