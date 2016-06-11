@@ -10,6 +10,11 @@
 @import 'mwyatt-codex/css/general.css';
 @import 'default.css';
 
+
+.site-heading-menu {
+    min-height: 80px;
+}
+
 .dialogue-title {
     font-size: 18px;
     font-weight: 600;
@@ -27,7 +32,7 @@
 .demos-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    margin: -10px;
 }
 
 .demo-single {
@@ -40,11 +45,14 @@
 }
 
 .button.demo-dialogue {
-    background: #fff;
-    color: #666;
-    border-radius: 5px;
-    padding: 10px;
+    flex-grow: 1;
+    flex-basis: 200px;
+    background: rgba(#fff, .3);
+    color: #fff;
+    border-radius: 3px;
+    padding: 24px;
     width: 100%;
-    margin: 1em 0;
     text-align: left;
+    font-size: 20px;
+    margin: 10px;
 }
