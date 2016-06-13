@@ -12,7 +12,9 @@ var templateContainer = [
     '{{#title}}<h6 class="dialogue-title">{{title}}</h6>{{/title}}',
     '{{#description}}<p class="dialogue-description">{{description}}</p>{{/description}}',
     '<div class="dialogue-html js-dialogue-html">{{{html}}}</div>',
+    '{{#actionNames.length}}',
     '<div class="dialogue-actions">{{#actionNames}}<button class="button primary dialogue-action js-dialogue-action" data-name="{{.}}">{{.}}</button>{{/actionNames}}</div>',
+    '{{/actionNames.length}}',
   '</div>',
 '</div>'
 ].join('');
@@ -70,6 +72,7 @@ Dialogue.prototype.create = function(options) {
     hardClose: false, // make it difficult to close the dialogue
     mask: false, // mask the page below
     width: false, // int
+    ajax: false, // starts the dialogue with html = spinner
     html: '', // raw html to be placed in to body area, under description
     actions: {
     // 'Cancel': function() {
@@ -127,6 +130,10 @@ Dialogue.prototype.create = function(options) {
   event.data = this;
 
   this.setEvents(event);
+
+  if (this.options.ajax) {
+    this.setHtml('<div class="dialogue-spinner-container"><div class="dialogue-spinner"></div></div>');
+  }
 
   if (this.options.ajaxConfig) {
     this.handleAjax(event);

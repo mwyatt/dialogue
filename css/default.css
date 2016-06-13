@@ -86,6 +86,24 @@
   min-height: 50px;
 }
 
+.dialogue-spinner-container {
+  padding: 20px 0px;
+}
+
+.dialogue-spinner {
+  margin: 0 auto;
+  animation: rotation 0.5s infinite linear;
+  height: 26px;
+  width: 26px;
+  border-left-color: #cccccc;
+  border-right-color: #cccccc;
+  border-bottom-color: #cccccc;
+  border-top-color: #eeeeee;
+  border-radius: 100%;
+  border-width: 4px;
+  border-style: solid;
+}
+
 .dialogue-ajax-is-loading .dialogue-html:before {
   content: ' ';
   position: absolute;

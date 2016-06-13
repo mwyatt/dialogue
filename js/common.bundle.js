@@ -51,19 +51,12 @@ $('.js-dialogue-5').on('click', function() {
   dialogue.create({
     mask: true,
     width: 250,
-    ajaxConfig: {
-      type: 'get',
-      url: '/dialogue/README.md',
-      dataType: 'text',
-      data: {},
-      success: function(response) {
-        this.setHtml(response);
-      },
-      error: function(response) {
-        console.log('dialogue5 error', response);
-      }
-    }
+    ajax: true
   });
+
+  setTimeout(function() {
+    dialogue.setHtml('Nothing was loaded, the ajax option just sets the dialogue up to look as thought it is loading something. It is up to you to create a request and then modify the dialogue from there.');
+  }, 2000);
 });
 
 $('.js-dialogue-6').on('click', function() {
