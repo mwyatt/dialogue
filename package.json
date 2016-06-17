@@ -18,12 +18,12 @@
   "dependencies": {
     "jquery": "1.11.2",
     "mustache": "~2.2.1",
-    "mwyatt-codex": "2.4.0"
+    "draggable": "^4.0.4"
   },
   "devDependencies": {
     "autoprefixer": "6.0.3",
+    "mwyatt-codex": "2.4.0",
     "browserify": "11.2.0",
-    "draggable": "^4.0.4",
     "es6-promise": "^3.0.2",
     "gulp": "3.9.0",
     "gulp-buffer": "0.0.2",
