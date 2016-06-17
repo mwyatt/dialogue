@@ -15,13 +15,13 @@
     "url": "https://github.com/mwyatt/dialogue/issues"
   },
   "homepage": "https://github.com/mwyatt/dialogue#readme",
-  "browserify-shim": {
-    "jquery": "global:$"
-  },
   "browserify": {
     "transform": [
       "browserify-shim"
     ]
+  },
+  "browserify-shim": {
+    "jquery": "global:$"
   },
   "dependencies": {
     "jquery": "1.11.2",
