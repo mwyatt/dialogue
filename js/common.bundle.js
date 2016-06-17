@@ -1,7 +1,20 @@
 var $ = require('jquery');
 var dialogueFactory = require('../index');
+
 var dialogue = new dialogueFactory();
 var dialogueOk = new dialogueFactory();
+
+$('.js-dialogue-8').on('click', function() {
+  dialogue.create({
+    title: 'Draggable',
+    description: 'Powered by bcherny/draggable! Drag me you loaf!',
+    className: 'dialogue-8',
+    positionTo: $(this),
+    draggable: true,
+    mask: true,
+    width: 250
+  });
+});
 
 $('.js-dialogue-1').on('click', function() {
   dialogue.create({

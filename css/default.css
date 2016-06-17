@@ -122,3 +122,18 @@
   border-width: 4px;
   border-style: solid;
 }
+
+.dialogue-draggable-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 50px;
+  cursor: move;
+  transition-property: background-color;
+  transition-duration: 200ms;
+}
+
+.dialogue-draggable-handle:hover {
+  background-color: rgba(#000, .5);
+}

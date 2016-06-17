@@ -10,7 +10,7 @@
 <body>
 	<div class="body-inner-container clearfix">
 		<div class="site-heading-container">
-			<h1 class="site-heading">Dialogue <span class="npm-version">2</span></h1>
+			<h1 class="site-heading">Dialogue <span class="npm-version">0.3.0</span></h1>
 			<div class="site-slogan">Fast, modern dialogue action.</div>
 			<div class="clearfix site-heading-menu">
 			    <div class="site-heading-menu-item"><a class="site-heading-menu-link button" href="https://www.npmjs.com/package/mwyatt-dialogue" target="_blank">NPM</a></div>
@@ -24,6 +24,8 @@
 				<button class="button demo-dialogue js-dialogue-5">Demo Ajax</button>
 				<button class="button demo-dialogue js-dialogue-6">Demo Auto Width</button>
 				<button class="button demo-dialogue js-dialogue-7">Demo Actions</button>
+				<button class="button demo-dialogue js-dialogue-8">Demo 
+				Draggable</button>
 			</nav>
 		</div>
 	</div>

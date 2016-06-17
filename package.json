@@ -3,7 +3,9 @@
   "version": "0.3.0",
   "author": "Martin Wyatt <martin.wyatt@gmail.com>",
   "description": "Flexible js dialogue for use anywhere.",
-  "scripts": {},
+  "scripts": {
+    "js": "browserify --debug -t [ stringify --extensions [.mustache] ] js/common.bundle.js > asset/common.bundle.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mwyatt/dialogue.git"
@@ -21,6 +23,7 @@
   "devDependencies": {
     "autoprefixer": "6.0.3",
     "browserify": "11.2.0",
+    "draggable": "^4.0.4",
     "es6-promise": "^3.0.2",
     "gulp": "3.9.0",
     "gulp-buffer": "0.0.2",
@@ -39,6 +42,7 @@
     "postcss-custom-properties": "^5.0.0",
     "postcss-hexrgba": "^0.2.0",
     "postcss-import": "^7.0.0",
-    "run-sequence": "^1.1.5"
+    "run-sequence": "^1.1.5",
+    "stringify": "5.1.0"
   }
 }
