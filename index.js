@@ -202,7 +202,7 @@ Dialogue.prototype.setEvents = function(event) {
   };
 
   $window.on('scroll.mwyatt-dialogue', function() {
-    console.log('scrolling');
+    // console.log('scrolling');
   });
 
   // option actions [ok, cancel]

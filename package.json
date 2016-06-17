@@ -15,6 +15,9 @@
     "url": "https://github.com/mwyatt/dialogue/issues"
   },
   "homepage": "https://github.com/mwyatt/dialogue#readme",
+  "browserify-shim": {
+    "jquery": "global:$"
+  },
   "dependencies": {
     "jquery": "1.11.2",
     "mustache": "~2.2.1",
@@ -22,8 +25,8 @@
   },
   "devDependencies": {
     "autoprefixer": "6.0.3",
-    "mwyatt-codex": "2.4.0",
     "browserify": "11.2.0",
+    "browserify-shim": "^3.8.12",
     "es6-promise": "^3.0.2",
     "gulp": "3.9.0",
     "gulp-buffer": "0.0.2",
@@ -36,6 +39,7 @@
     "gulp-uglify": "^1.5.3",
     "gulp-util": "~3.0.7",
     "imagemin-pngquant": "^4.2.2",
+    "mwyatt-codex": "2.4.0",
     "postcss-color-function": "^2.0.0",
     "postcss-conditionals": "^2.0.1",
     "postcss-csscomb": "0.0.0",
