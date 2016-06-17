@@ -1,6 +1,6 @@
 {
   "name": "mwyatt-dialogue",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "author": "Martin Wyatt <martin.wyatt@gmail.com>",
   "description": "Flexible js dialogue for use anywhere.",
   "scripts": {
