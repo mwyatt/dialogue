@@ -18,6 +18,11 @@
   "browserify-shim": {
     "jquery": "global:$"
   },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
   "dependencies": {
     "jquery": "1.11.2",
     "mustache": "~2.2.1",
