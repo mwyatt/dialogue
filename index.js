@@ -5,6 +5,7 @@ var draggable = require('draggable');
 var $document = $(document);
 var $window = $(window);
 var $body = $('body');
+var dialogueOpenCount = 1;
 
 var templateContainer = require('./js/container.mustache');
 
@@ -103,8 +104,8 @@ Dialogue.prototype.create = function(options) {
     };
   };
 
-  $body.append(mustache.render(templateContainer, this.options));
-  
+  $body.prepend(mustache.render(templateContainer, this.options));
+
   this.$container = $(gS(classNames.container) + gS(this.options.className + '-container'));
   this.$dialogue = this.$container.find(gS(classNames.dialogue));
   this.$dialogueHtml = this.$container.find(gS(classNames.dialogueHtml));
@@ -140,6 +141,8 @@ Dialogue.prototype.create = function(options) {
 
     // completed build
     this.options.onComplete.call(event.data);
+
+    this.$container.css('z-index', dialogueOpenCount++);
     event.data.applyCssPosition(event);
   };
 };
@@ -303,6 +306,8 @@ Dialogue.prototype.applyCssPosition = function(event) {
  * @return {null}
  */
 Dialogue.prototype.closeWithEvent = function(event) {
+
+  dialogueOpenCount--;
 
   // remove after animation (issue with if there was no animation)
   // var removeClassName = 'dialogue-remove';

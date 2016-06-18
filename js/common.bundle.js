@@ -47,7 +47,7 @@ $('.js-dialogue-3').on('click', function() {
     className: 'dialogue-3',
     width: 250,
     title: 'Hard Close',
-    description: 'Can only be closed using the \'&times;\' icon in the corner.'
+    description: 'Can only be closed using the \'x\' icon in the corner.'
   });
 });
 
@@ -94,6 +94,7 @@ $('.js-dialogue-7').on('click', function() {
         var $buttonOk = $('[data-name="Ok"]');
         dialogueOk.create({
           width: 220,
+          mask: true,
           positionTo: $buttonOk,
           title: 'Ok Clicked',
           description: 'Ok was indeed clicked.',
