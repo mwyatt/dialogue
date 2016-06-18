@@ -13,12 +13,14 @@
         <div class="dialogue-draggable-handle js-dialogue-draggable-handle"></div>
     
 {{/draggable}}
+{{^hideClose}}
 
         <span class="dialogue-close js-dialogue-close">&times;</span>
 
+{{/hideClose}}
 {{#title}}
 
-        <h6 class="dialogue-title">{{title}}</h6>
+        <h6 class="dialogue-title js-dialogue-title">{{title}}</h6>
 
 {{/title}}
 {{#description}}

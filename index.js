@@ -4,6 +4,7 @@ var draggable = require('draggable');
 
 var $document = $(document);
 var $window = $(window);
+var $body = $('body');
 
 var templateContainer = require('./js/container.mustache');
 
@@ -58,6 +59,7 @@ Dialogue.prototype.create = function(options) {
     mask: false, // mask the page below
     width: false, // int
     ajax: false, // starts the dialogue with html = spinner
+    hideClose: false,
     html: '', // raw html to be placed in to body area, under description
     draggable: '', // draggable instance
     actions: {
@@ -101,7 +103,8 @@ Dialogue.prototype.create = function(options) {
     };
   };
 
-  $('body').append(mustache.render(templateContainer, this.options));
+  $body.append(mustache.render(templateContainer, this.options));
+  
   this.$container = $(gS(classNames.container) + gS(this.options.className + '-container'));
   this.$dialogue = this.$container.find(gS(classNames.dialogue));
   this.$dialogueHtml = this.$container.find(gS(classNames.dialogueHtml));
@@ -326,6 +329,14 @@ Dialogue.prototype.close = function() {
 
 Dialogue.prototype.setHtml = function(html) {
   this.$dialogueHtml.html(html);
+};
+
+Dialogue.prototype.setTitle = function(html) {
+  this.$dialogue.find('.js-dialogue-title').html(html);
+};
+
+Dialogue.prototype.isOpen = function() {
+  return typeof this.$dialogue !== 'undefined';
 };
 
 Dialogue.prototype.reposition = function() {
