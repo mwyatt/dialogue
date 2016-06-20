@@ -16,13 +16,14 @@
   },
   "homepage": "https://github.com/mwyatt/dialogue#readme",
   "dependencies": {
+    "browserify": "11.2.0",
     "jquery": "1.11.2",
     "mustache": "~2.2.1",
-    "draggable": "^4.0.4"
+    "draggable": "^4.0.4",
+    "stringify": "5.1.0"
   },
   "devDependencies": {
     "autoprefixer": "6.0.3",
-    "browserify": "11.2.0",
     "es6-promise": "^3.0.2",
     "gulp": "3.9.0",
     "gulp-buffer": "0.0.2",
@@ -42,7 +43,6 @@
     "postcss-custom-properties": "^5.0.0",
     "postcss-hexrgba": "^0.2.0",
     "postcss-import": "^7.0.0",
-    "run-sequence": "^1.1.5",
-    "stringify": "5.1.0"
+    "run-sequence": "^1.1.5"
   }
 }
