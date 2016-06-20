@@ -5,7 +5,7 @@ var draggable = require('draggable');
 var $document = $(document);
 var $window = $(window);
 var $body = $('body');
-var dialogueOpenCount = 1;
+var dialogueOpenCount = 100;
 
 var templateContainer = require('./js/container.mustache');
 
