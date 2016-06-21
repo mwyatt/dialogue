@@ -1,8 +1,8 @@
 # Installation
-```
+```bash
 npm install mwyatt-dialogue --save
 ```
-```
+```javascript
 var dialogueFactory = require('mwyatt-dialogue');
 var dialogue = new dialogueFactory();
 
@@ -10,6 +10,7 @@ dialogue.create({
   title: 'Hello World'
 });
 ```
+
 ## Options
 ### `title`
 Gives the dialogue a title.
