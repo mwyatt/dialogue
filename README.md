@@ -1,3 +1,6 @@
+# Demo
+Simple, light and flexible js dialogue.
+http://mwyatt.github.io/dialogue/
 # Installation
 ```bash
 npm install mwyatt-dialogue --save
