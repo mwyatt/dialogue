@@ -2,9 +2,10 @@
   "name": "mwyatt-dialogue",
   "version": "0.5.2",
   "author": "Martin Wyatt <martin.wyatt@gmail.com>",
-  "description": "Flexible js dialogue for use anywhere.",
+  "description": "Simple, light and flexible js dialogue. http://mwyatt.github.io/dialogue/",
   "scripts": {
-    "js": "browserify --debug -t [ stringify --extensions [.mustache] ] js/common.bundle.js > asset/common.bundle.js"
+    "j": "browserify --debug -t [ stringify --extensions [.mustache] ] js/common.bundle.js > asset/common.bundle.js",
+    "jd": "browserify -t [ stringify --extensions [.mustache] ] js/common.bundle.js | uglifyjs > asset/common.bundle.js"
   },
   "repository": {
     "type": "git",
@@ -43,6 +44,7 @@
     "postcss-custom-properties": "^5.0.0",
     "postcss-hexrgba": "^0.2.0",
     "postcss-import": "^7.0.0",
-    "run-sequence": "^1.1.5"
+    "run-sequence": "^1.1.5",
+    "uglify-js": "^2.6.4"
   }
 }

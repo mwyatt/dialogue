@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
     <title><?php echo $package->name ?></title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="asset/common.bundle.css">
 </head>
@@ -29,7 +30,6 @@
             </nav>
         </div>
     </div>
-    <script src="asset/lib.js"></script>
-    <script src="asset/common.bundle.js?2"></script>
+    <script src="asset/common.bundle.js?<?php echo filemtime('asset/common.bundle.js') ?>"></script>
 </body>
 </html>

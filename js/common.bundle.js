@@ -2,7 +2,7 @@ var $ = require('jquery');
 var dialogueFactory = require('../index');
 
 var dialogue = new dialogueFactory();
-var dialogueOk = new dialogueFactory();
+var dialogueDeep = new dialogueFactory();
 
 $('.js-dialogue-8').on('click', function() {
   dialogue.create({
@@ -92,7 +92,7 @@ $('.js-dialogue-7').on('click', function() {
       },
       'Ok': function() {
         var $buttonOk = $('[data-name="Ok"]');
-        dialogueOk.create({
+        dialogueDeep.create({
           width: 220,
           mask: true,
           positionTo: $buttonOk,
