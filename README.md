@@ -30,3 +30,15 @@ dialogue.create({
 | `html` | `string` Insert html directly into the dialogue. |
 | `hideClose` | `bool` `default: false` If true, hides the closing cross from the corner. |
 | `width` | `integer` Integer specifying exact pixel width for dialogue. |
+## Methods
+Various methods can be called upon once the dialogue is created.
+```javascript
+dialogue.close();
+```
+| Method | Action |
+| --- | --- |
+| `close` | Closes the dialogue and removes any events. |
+| `setHtml` | `string` Replaces the html area with the passed string. |
+| `setTitle` | `string` Replaces the title area with the passed string. |
+| `reposition` | Centers the dialogue in the viewport. |
+| `isOpen` | `returns bool` Returns true if the dialogue is curerntly open.  |
