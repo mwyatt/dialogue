@@ -1,0 +1,2 @@
+#!/bin/sh
+browserify --debug -t [ stringify --extensions [.mustache] ] js/common.bundle.js > asset/common.bundle.js
