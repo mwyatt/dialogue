@@ -1,18 +1,11 @@
-var $ = require('jquery');
 var mustache = require('mustache');
 var draggable = require('draggable');
-
-var $document = $(document);
-var $window = $(window);
-var $body = $('body');
-var dialogueOpenCount = 100;
-
+var extend = require('extend');
+var dialoguesOpen = [];
 var templateContainer = require('./js/container.mustache');
-
 var keyCode = {
   esc: 27
 };
-
 var classNames = {
   container: 'js-dialogue-container',
   dialogue: 'js-dialogue',
@@ -21,9 +14,35 @@ var classNames = {
   dialogueMask: 'js-dialogue-mask'
 };
 
+if (typeof document === 'undefined') {
+  console.warn('document object undefined.');
+}
+
+if (typeof window === 'undefined') {
+  console.warn('window object undefined.');
+}
+
+var body = document.querySelector('body');
+if (!body) {
+  console.warn('body element not found.');
+}
+
+// checks if el is inside a target class
+// if there is no HTML element this will explode.
+var isInside = function(el, parentClass) {
+  while (el.tagName !== 'HTML') {
+       
+    if (el.parentNode.classList.contains(parentClass)) {
+      return true;
+    }
+       
+    el = el.parentNode;
+  }
+};
+
 // obtains css selector version of a class name
 // how can this be done better?
-var gS = function(className) {
+var class_ = function(className) {
   return '.' + className;
 };
 
@@ -49,13 +68,14 @@ Dialogue.prototype.setTemplateContainer = function(html) {
  */
 Dialogue.prototype.create = function(options) {
   var defaultOptions = {
+    id: '',
     templateContainer: '', // the mustache template container html
     className: '', // to identify the dialogue uniquely
 
     // optional
     title: '',
     description: '',
-    positionTo: '', // $selector where the dialogue will appear
+    positionTo: '', // selector where the dialogue will appear
     hardClose: false, // make it difficult to close the dialogue
     mask: false, // mask the page below
     width: false, // int
@@ -84,18 +104,14 @@ Dialogue.prototype.create = function(options) {
     // }
     ],
     onComplete: function() {}, // fired when dialogue has been rendered
-    onClose: function() {}, // fired when dialogue has been closed
-
-    // jquery ajax object
-    ajaxConfig: false,
-
-    // proposed
-    cssAnimation: false // to tell close whether to check for animation end? still a problem with browser compatibility
+    onClose: function() {} // fired when dialogue has been closed
   };
-  this.options = $.extend(defaultOptions, options);
+  extend(this.options, defaultOptions, options);
 
   // need to have a unique classname otherwise it cant be selected
   this.options.className = this.options.className ? this.options.className : getRandomString();
+
+  this.options.id = getRandomString();
 
   if (this.options.actions) {
     this.options.actionNames = [];
@@ -104,112 +120,65 @@ Dialogue.prototype.create = function(options) {
     };
   };
 
-  $body.prepend(mustache.render(templateContainer, this.options));
+  body.innerHtml = mustache.render(templateContainer, this.options) + body.innerHtml;
 
-  this.$container = $(gS(classNames.container) + gS(this.options.className + '-container'));
-  this.$dialogue = this.$container.find(gS(classNames.dialogue));
-  this.$dialogueHtml = this.$container.find(gS(classNames.dialogueHtml));
+  this.container = document.querySelector(class_(classNames.container) + class_(this.options.className + '-container'));
+  this.dialogue = this.container.querySelector(class_(classNames.dialogue));
+  this.dialogueHtml = this.container.querySelector(class_(classNames.dialogueHtml));
 
   if (this.options.mask) {
-    this.$dialogueMask = this.$container.find(gS(classNames.dialogueMask));
+    this.dialogueMask = this.container.querySelector(class_(classNames.dialogueMask));
   };
 
   if (this.options.draggable) {
-    new draggable (this.$dialogue[0], {
+    new draggable (this.dialogue, {
       filterTarget: function(target) {
-        return $(target).hasClass('js-dialogue-draggable-handle');
+        return target.classList.contains('js-dialogue-draggable-handle');
       }
     });
   }
 
-  if (typeof event == 'undefined') {
-    var event = {};
+  if (!dialoguesOpen.length) {
+    document.addEventListener('keyup', handleKeyup);
   }
-  event.data = this;
 
-  this.setEvents(event);
+  setEvents(this);
 
   if (this.options.ajax) {
     this.setHtml('<div class="dialogue-spinner-container"><div class="dialogue-spinner"></div></div>');
   }
 
-  if (this.options.ajaxConfig) {
-    this.handleAjax(event);
-
-    // no ajax
-  } else {
-
-    // completed build
-    this.options.onComplete.call(event.data);
-
-    this.$container.css('z-index', dialogueOpenCount++);
-    event.data.applyCssPosition(event);
-  };
-};
-
-Dialogue.prototype.handleAjax = function(event) {
-  var config = event.data.options.ajaxConfig;
-  var isImage;
-
-  // using a class because cant think of a way to get the ajax loader
-  // inside the plugin, css3 spinner?
-  var ajaxLoadClass = 'dialogue-ajax-is-loading';
-
-  event.data.$container.addClass(ajaxLoadClass);
-  event.data.applyCssPosition(event);
-
-  // image or data?
-  // if (config.url.indexOf('.jpg') || config.url.indexOf('.gif') || config.url.indexOf('.png')) {
-  //   isImage = true;
-  // };
-
-  $.ajax({
-    type: config.type,
-    url: config.url,
-    dataType: config.dataType,
-    data: config.data,
-    complete: function() {
-      event.data.$container.removeClass(ajaxLoadClass);
-      // config.complete.call(event.data);
-      event.data.options.onComplete.call(event.data);
-      event.data.applyCssPosition(event);
-    },
-    success: function(response) {
-      config.success.call(event.data, response);
-      event.data.applyCssPosition(event);
-    },
-    error: function(response) {
-      config.error.call(event.data, response);
-      event.data.applyCssPosition(event);
-    }
+  dialoguesOpen.push({
+    container: this.container
   });
+
+  this.container.css('z-index', dialogueOpenCount++);
+  event.data.applyCssPosition(event);
+  this.options.onComplete.call(event.data);
 };
 
-Dialogue.prototype.setEvents = function(event) {
+function handleKeyup(event) {
+  
+  if (event.which == keyCode.esc) {
+    var dialogue = dialoguesOpen.splice(-1, 1);
+    closeInstance(dialogue);
+  }
+}
+
+function setEvents(dialogue) {
 
   // not hard to close
-  if (!event.data.options.hardClose) {
+  if (!dialogue.options.hardClose) {
 
-    // hit esc
-    $document.on('keyup.dialogue.close', event.data, function(event) {
-      if (event.which == keyCode.esc) {
-        event.data.closeWithEvent(event);
-      }
-    });
-
-    // mousedown outside of dialogue
-    // down used because when clicking and dragging an input value will
-    // close it
-    event.data.$container.on('mousedown.dialogue.close', event.data, function(event) {
-      if (!$(event.target).closest(gS(classNames.dialogue)).length) {
-        event.data.closeWithEvent(event);
+    // mousedown outside of dialogue, down used because when
+    // clicking and dragging an input value will close it
+    dialogue.container.addEventListener('mousedown', function(event) {
+      var result = isInside(event.target, class_(classNames.dialogue));
+      if (!result) {
+        dialogue.closeInstance(dialogue);
       }
     });
   };
-
-  $window.on('scroll.mwyatt-dialogue', function() {
-    // console.log('scrolling');
-  });
 
   // option actions [ok, cancel]
   var actions = event.data.options.actions;
@@ -226,15 +195,16 @@ Dialogue.prototype.setEvents = function(event) {
   };
 
   // click body means dont close
-  event.data.$container.on('click.dialogue.body', gS(classNames.dialogue), this, function(event) {
+  event.data.$container.on('click.dialogue.body', class_(classNames.dialogue), this, function(event) {
     event.stopPropagation();
   });
 
   // clicking close [x]
-  event.data.$container.on('click.dialogue.close', gS(classNames.dialogueClose), this, function(event) {
-    event.data.closeWithEvent(event);
+  event.data.$container.on('click', class_(classNames.dialogueClose), this, function(event) {
+    event.data.closeInstance(event);
   });
-};
+
+}
 
 Dialogue.prototype.setActionEvent = function(event, actionName, actionFunction) {
   event.data.$container.on('click.dialogue.action', '.js-dialogue-action[data-name="' + actionName + '"]', event.data, function(event) {
@@ -305,43 +275,43 @@ Dialogue.prototype.applyCssPosition = function(event) {
  * @param  {object} data
  * @return {null}
  */
-Dialogue.prototype.closeWithEvent = function(event) {
+Dialogue.prototype.closeInstance = function(dialogue) {
 
-  dialogueOpenCount--;
-
-  // remove after animation (issue with if there was no animation)
-  // var removeClassName = 'dialogue-remove';
-  // this.$container.addClass(removeClassName);
-  // this.$dialogue.on(getMotionEventName('animation'), function() {
-
-  // remove events
-  $document
-  // .off('click.dialogue.action')
-  .off('keyup.dialogue.close');
-
-  // may have never been opened, attempted to close without ever opening
-  if (typeof event.data.$container !== 'undefined') {
-    event.data.$container.off(); // needed?
-    event.data.$container.remove();
-    event.data.options.onClose.call(event.data);
-    $window.off('scroll.mwyatt-dialogue');
+  if (!dialoguesOpen.length) {
+    return;
   }
+
+  dialoguesOpen.forEach(function(dialogueSingle, index) {
+    if (dialogueSingle.options.id == dialogue.id) {
+      dialoguesOpen.splice(index, 1);
+    }
+  });
+
+  if (!dialoguesOpen.length) {
+    document.removeEventListener('keyup', handleKeyup)
+  }
+
+  // .off('click.dialogue.action')
+
+  // dialogue.container.off(); // needed?
+  dialogue.container.remove();
+  dialogue.options.onClose.call(dialogue);
 };
 
 Dialogue.prototype.close = function() {
-  this.closeWithEvent({data: this});
+  this.closeInstance({data: this});
 };
 
 Dialogue.prototype.setHtml = function(html) {
-  this.$dialogueHtml.html(html);
+  this.dialogueHtml.html(html);
 };
 
 Dialogue.prototype.setTitle = function(html) {
-  this.$dialogue.find('.js-dialogue-title').html(html);
+  this.dialogue.find('.js-dialogue-title').html(html);
 };
 
 Dialogue.prototype.isOpen = function() {
-  return typeof this.$dialogue !== 'undefined';
+  return typeof this.dialogue !== 'undefined';
 };
 
 Dialogue.prototype.reposition = function() {
