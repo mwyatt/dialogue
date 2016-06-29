@@ -1,8 +1,10 @@
 require('es6-promise').polyfill(); // required to fix postcss-import?
 
+
+var assetDest = 'asset/';
+var jsSitemaps = true;
+var jsLibs = 
 var settings = {
-  isLocal: true,
-  assetDest: 'asset/',
   watch: {
     css: 'css/**/*.css',
     js: 'js/**/*.js'
@@ -73,12 +75,12 @@ function watch() {
 function js() {
   return gulp.src(settings.js + '**/*.bundle.js', {read: false})
     .pipe(tap(function(file) {
-      file.contents = browserify(file.path, {debug: settings.isLocal})
+      file.contents = browserify(file.path, {debug: jsSitemaps})
         .bundle();
       gutil.log('build ' + file.path);
     }))
     .pipe(buffer())
-    .pipe(gulp.dest(settings.assetDest));
+    .pipe(gulp.dest(assetDest));
 };
 
 function css() {
@@ -87,16 +89,16 @@ function css() {
     .pipe(tap(function(file) {
       gutil.log('build ' + file.path);
     }))
-    .pipe(gulp.dest(settings.assetDest));
+    .pipe(gulp.dest(assetDest));
 };
 
 function cssMin() {
-  return gulp.src(settings.assetDest + '**/*.css')
+  return gulp.src(assetDest + '**/*.css')
     .pipe(cssmin())
     .pipe(tap(function(file) {
       gutil.log('minify ' + file.path);
     }))
-    .pipe(gulp.dest(settings.assetDest));
+    .pipe(gulp.dest(assetDest));
 }
 
 function cssTidy() {
@@ -114,16 +116,16 @@ function jsLib() {
       gutil.log('concat ' + file.path);
     }))
     .pipe(gulpConcat('lib.js'))
-    .pipe(gulp.dest(settings.assetDest));
+    .pipe(gulp.dest(assetDest));
 }
 
 function jsMin() {
-  return gulp.src(settings.assetDest + '**.js')
+  return gulp.src(assetDest + '**.js')
     .pipe(uglify())
     .pipe(tap(function(file) {
       gutil.log('minify ' + file.path);
     }))
-    .pipe(gulp.dest(settings.assetDest));
+    .pipe(gulp.dest(assetDest));
 }
 
 function jsTidy() {
@@ -142,9 +144,9 @@ function mediaTidy() {
       svgoPlugins: [{removeViewBox: false}],
       use: [pngquant()]
     }))
-    .pipe(gulp.dest(settings.assetDest));
+    .pipe(gulp.dest(assetDest));
 }
 
 function copy() {
-  gulp.src(settings.media + '**').pipe(gulp.dest(settings.assetDest));
+  gulp.src(settings.media + '**').pipe(gulp.dest(assetDest));
 }
