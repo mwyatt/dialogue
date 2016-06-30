@@ -13,19 +13,7 @@ var classNames = {
   dialogueClose: 'js-dialogue-close',
   dialogueMask: 'js-dialogue-mask'
 };
-
-if (typeof document === 'undefined') {
-  console.warn('document object undefined.');
-}
-
-if (typeof window === 'undefined') {
-  console.warn('window object undefined.');
-}
-
-var body = document.querySelector('body');
-if (!body) {
-  console.warn('body element not found.');
-}
+var docBody = document.querySelector('body');
 
 // checks if el is inside a target class
 // if there is no HTML element this will explode.
@@ -67,8 +55,14 @@ Dialogue.prototype.setTemplateContainer = function(html) {
  * render, bind events, and position new dialogue
  */
 Dialogue.prototype.create = function(options) {
-  var defaultOptions = {
-    id: '',
+  this.options;
+  this.container;
+  this.dialogue;
+  this.dialogueHtml;
+  this.dialogueMask;
+
+  var optionsTemplate = {
+    id: '', // randomly generated on creation, but why?
     templateContainer: '', // the mustache template container html
     className: '', // to identify the dialogue uniquely
 
@@ -106,13 +100,17 @@ Dialogue.prototype.create = function(options) {
     onComplete: function() {}, // fired when dialogue has been rendered
     onClose: function() {} // fired when dialogue has been closed
   };
-  extend(this.options, defaultOptions, options);
+  
+  extend(optionsTemplate, options);
+
+  this.options = optionsTemplate;
 
   // need to have a unique classname otherwise it cant be selected
   this.options.className = this.options.className ? this.options.className : getRandomString();
 
   this.options.id = getRandomString();
 
+  // for mustache template
   if (this.options.actions) {
     this.options.actionNames = [];
     for (var actionName in this.options.actions) {
@@ -120,11 +118,13 @@ Dialogue.prototype.create = function(options) {
     };
   };
 
-  body.innerHtml = mustache.render(templateContainer, this.options) + body.innerHtml;
+  docBody.insertAdjacentHTML('afterbegin', mustache.render(templateContainer, this.options));
 
   this.container = document.querySelector(class_(classNames.container) + class_(this.options.className + '-container'));
   this.dialogue = this.container.querySelector(class_(classNames.dialogue));
   this.dialogueHtml = this.container.querySelector(class_(classNames.dialogueHtml));
+
+  // this.dialogue.focus();
 
   if (this.options.mask) {
     this.dialogueMask = this.container.querySelector(class_(classNames.dialogueMask));
@@ -148,19 +148,17 @@ Dialogue.prototype.create = function(options) {
     this.setHtml('<div class="dialogue-spinner-container"><div class="dialogue-spinner"></div></div>');
   }
 
-  dialoguesOpen.push({
-    container: this.container
-  });
+  dialoguesOpen.push(this);
 
-  this.container.css('z-index', dialogueOpenCount++);
-  event.data.applyCssPosition(event);
-  this.options.onComplete.call(event.data);
+  applyCssPosition(this);
+
+  this.options.onComplete.call(this);
 };
 
 function handleKeyup(event) {
   
   if (event.which == keyCode.esc) {
-    var dialogue = dialoguesOpen.splice(-1, 1);
+    var dialogue = dialoguesOpen[dialoguesOpen.length - 1];
     closeInstance(dialogue);
   }
 }
@@ -173,101 +171,142 @@ function setEvents(dialogue) {
     // mousedown outside of dialogue, down used because when
     // clicking and dragging an input value will close it
     dialogue.container.addEventListener('mousedown', function(event) {
-      var result = isInside(event.target, class_(classNames.dialogue));
+      if (event.target.classList.contains(classNames.dialogue)) {
+        return;
+      }
+      var result = isInside(event.target, classNames.dialogue);
       if (!result) {
-        dialogue.closeInstance(dialogue);
+        closeInstance(dialogue);
       }
     });
   };
 
   // option actions [ok, cancel]
-  var actions = event.data.options.actions;
-  if (actions) {
-    $document.on('keypress.dialogue.action', '.js-dialogue-action', function(event) {
-      if (event.which == keyCode.enter) {
-        $(this).trigger('click.dialogue.action');
-      };
-    });
-    for (var actionName in actions) {
-      event.data.setActionEvent(event, actionName, actions[actionName]);
+  if (dialogue.options.actions) {
+    var lastButton;
+
+    for (var actionName in dialogue.options.actions) {
+      lastButton = dialogue.container.querySelector('.js-dialogue-action[data-name="' + actionName + '"]');
+      setActionEvent(dialogue, lastButton, dialogue.options.actions[actionName]);
     };
-    $('.js-dialogue-action').last().focus();
+
+    if (lastButton) {
+      lastButton.focus();
+    }
   };
 
   // click body means dont close
-  event.data.$container.on('click.dialogue.body', class_(classNames.dialogue), this, function(event) {
+  dialogue.dialogue.addEventListener('click', function(event) {
     event.stopPropagation();
   });
 
   // clicking close [x]
-  event.data.$container.on('click', class_(classNames.dialogueClose), this, function(event) {
-    event.data.closeInstance(event);
-  });
-
+  if (!dialogue.options.hideClose) {
+    var button = dialogue.container.querySelector(class_(classNames.dialogueClose));
+    button.addEventListener('click', function(event) {
+      closeInstance(dialogue);
+    });
+  }
 }
 
-Dialogue.prototype.setActionEvent = function(event, actionName, actionFunction) {
-  event.data.$container.on('click.dialogue.action', '.js-dialogue-action[data-name="' + actionName + '"]', event.data, function(event) {
-    actionFunction.call(event.data);
-  });
+function setActionEvent(dialogue, button, actionCallback) {
+  if (button) {
+    button.addEventListener('click', function() {
+      actionCallback.call(dialogue);
+    });
+  }
 };
 
-// apply the css to the dialogue
-// max-width
-// position
-Dialogue.prototype.applyCssPosition = function(event) {
+function parsePx(int) {
+  if (int === 'auto') {
+    return int;
+  }
+  return int + 'px';
+}
+
+function getStyle(oElm, strCssRule) {
+  var strValue = "";
+  if(document.defaultView && document.defaultView.getComputedStyle){
+    strValue = document.defaultView.getComputedStyle(oElm, "").getPropertyValue(strCssRule);
+  }
+  else if(oElm.currentStyle){
+    strCssRule = strCssRule.replace(/\-(\w)/g, function (strMatch, p1){
+      return p1.toUpperCase();
+    });
+    strValue = oElm.currentStyle[strCssRule];
+  }
+  return strValue;
+}
+
+// apply the css to the dialogue to position correctly
+function applyCssPosition(dialogue) {
+  var positionalEl = dialogue.options.positionTo;
   var containerPadding = 20;
-  var cssSettings = {};
-  cssSettings['max-width'] = event.data.options.width;
-
-  // position dialogue
-  var $positionalElement = event.data.options.positionTo;
-  var clientFrame = {
-    positionVertical: $window[0].pageYOffset,
-    height: $window[0].innerHeight,
-    width: $window.width()
+  var cssSettings = {
+    top: '',
+    left: '',
+    position: '',
+    margin: '',
+    marginTop: 0,
+    marginRight: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    maxWidth: dialogue.options.width
   };
-
-  var borderWidth = 1;
-  var paddingWidth = 20;
-  var dialogueHeight = parseInt(event.data.$dialogue.height()) + (paddingWidth * 2) + (borderWidth * 2);
+  var clientFrame = {
+    positionVertical: window.pageYOffset,
+    height: window.innerHeight,
+    width: window.innerWidth
+  };
+  var borderWidth = parseInt(getStyle(dialogue.dialogue, 'border-width'));
+  var dialogueHeight = parseInt(dialogue.dialogue.offsetHeight) + (borderWidth * 2);
 
   // position container
-  event.data.$container.css({
-    top: clientFrame.positionVertical
-  });
+  dialogue.container.style.top = parsePx(clientFrame.positionVertical);
 
   // position to element or centrally window
-  if ($positionalElement.length) {
+  if (positionalEl) {
+    var boundingRect = positionalEl.getBoundingClientRect();
 
     // calc top
     cssSettings.position = 'absolute';
-    cssSettings.top = parseInt($positionalElement.offset().top) - parseInt(event.data.$container.offset().top);
-    cssSettings.left = parseInt($positionalElement.offset().left);
+    cssSettings.top = parseInt(boundingRect.top);
+    cssSettings.left = parseInt(boundingRect.left);
 
     // if the right side of the dialogue is poking out of the clientFrame then
     // bring it back in plus 50px padding
-    if ((cssSettings.left + cssSettings['max-width']) > clientFrame.width) {
+    if ((cssSettings.left + cssSettings['maxWidth']) > clientFrame.width) {
       cssSettings.left = clientFrame.width - 50;
-      cssSettings.left = cssSettings.left - cssSettings['max-width'];
+      cssSettings.left = cssSettings.left - cssSettings['maxWidth'];
     };
 
     // no positional element so center to window
   } else {
     cssSettings.position = 'relative';
-    cssSettings.margin = '0 auto';
     cssSettings.left = 'auto';
+    cssSettings.marginTop = 0;
+    cssSettings.marginRight = 'auto';
+    cssSettings.marginBottom = 0;
+    cssSettings.marginLeft = 'auto';
 
     // center vertically if there is room
     // otherwise send to top and then just scroll
     if (dialogueHeight < clientFrame.height) {
       cssSettings.top = parseInt(clientFrame.height / 2) - parseInt(dialogueHeight / 2) - containerPadding;
     } else {
-      cssSettings.top = 0;
+      cssSettings.top = 'auto';
     };
   };
 
-  event.data.$dialogue.css(cssSettings);
+  dialogue.container.style.zIndex = 500 + dialoguesOpen.length;
+  dialogue.dialogue.style.top = parsePx(cssSettings.top);
+  dialogue.dialogue.style.left = parsePx(cssSettings.left);
+  dialogue.dialogue.style.position = parsePx(cssSettings.position);
+  dialogue.dialogue.style.marginTop = parsePx(cssSettings.marginTop);
+  dialogue.dialogue.style.marginRight = parsePx(cssSettings.marginRight);
+  dialogue.dialogue.style.marginBottom = parsePx(cssSettings.marginBottom);
+  dialogue.dialogue.style.marginLeft = parsePx(cssSettings.marginLeft);
+  dialogue.dialogue.style.maxWidth = parsePx(cssSettings.maxWidth);
 };
 
 /**
@@ -275,35 +314,35 @@ Dialogue.prototype.applyCssPosition = function(event) {
  * @param  {object} data
  * @return {null}
  */
-Dialogue.prototype.closeInstance = function(dialogue) {
+function closeInstance(dialogue) {
 
   if (!dialoguesOpen.length) {
     return;
   }
 
   dialoguesOpen.forEach(function(dialogueSingle, index) {
-    if (dialogueSingle.options.id == dialogue.id) {
+    if (dialogueSingle.options.id == dialogue.options.id) {
       dialoguesOpen.splice(index, 1);
     }
   });
 
   if (!dialoguesOpen.length) {
-    document.removeEventListener('keyup', handleKeyup)
+    document.removeEventListener('keyup', handleKeyup);
   }
 
   // .off('click.dialogue.action')
 
   // dialogue.container.off(); // needed?
-  dialogue.container.remove();
+  docBody.removeChild(dialogue.container);
   dialogue.options.onClose.call(dialogue);
 };
 
 Dialogue.prototype.close = function() {
-  this.closeInstance({data: this});
+  closeInstance(this);
 };
 
 Dialogue.prototype.setHtml = function(html) {
-  this.dialogueHtml.html(html);
+  this.dialogueHtml.innerHTML = html;
 };
 
 Dialogue.prototype.setTitle = function(html) {
@@ -315,7 +354,7 @@ Dialogue.prototype.isOpen = function() {
 };
 
 Dialogue.prototype.reposition = function() {
-  this.applyCssPosition({data: this});
+  applyCssPosition(this);
 };
 
 module.exports = Dialogue;

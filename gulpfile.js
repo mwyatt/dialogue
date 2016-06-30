@@ -1,16 +1,13 @@
 require('es6-promise').polyfill(); // required to fix postcss-import?
 
-
 var assetDest = 'asset/';
 var jsSitemaps = true;
-var jsLibs = 
 var settings = {
   watch: {
     css: 'css/**/*.css',
     js: 'js/**/*.js'
   },
   jsLibs: [
-    'node_modules/jquery/dist/jquery.js',
     'node_modules/mustache/mustache.js'
   ],
   css: 'css/',

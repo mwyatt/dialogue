@@ -4,8 +4,8 @@
   "author": "Martin Wyatt <martin.wyatt@gmail.com>",
   "description": "Simple, light and flexible js dialogue. http://mwyatt.github.io/dialogue/",
   "scripts": {
-    "j": "sh ./bin/browserify",
-    "jd": "browserify -t [ stringify --extensions [.mustache] ] js/common.bundle.js | uglifyjs > asset/common.bundle.js"
+    "j": "browserify -d -t [ stringify --extensions [.mustache] ] js/common.bundle.js > asset/common.bundle.js",
+    "ju": "browserify -t [ stringify --extensions [.mustache] ] js/common.bundle.js | uglifyjs > asset/common.bundle.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,6 @@
     "browserify": "11.2.0",
     "draggable": "^4.0.4",
     "extend": "^3.0.0",
-    "jquery": "1.11.2",
     "mustache": "~2.2.1",
     "stringify": "5.1.0"
   },
