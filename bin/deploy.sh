@@ -5,5 +5,5 @@ then
   exit 1
 fi
 php index.php > $1/index.html
-sudo cp -r asset/ $1/asset/
+sudo cp -r asset/ $1/
 git subtree push --prefix $1 origin gh-pages
