@@ -14,6 +14,8 @@
   --color-secondary-2-2: color(var(--color-secondary-2-0) shade(50%));
   --color-secondary-2-3: color(var(--color-secondary-2-0) tint(25%));
   --color-secondary-2-4: color(var(--color-secondary-2-0) tint(50%));
+  --font-family: 'Open Sans', 'Arial', 'sans-serif';
+  --font-family: 'Work Sans', 'Arial', 'sans-serif';
   --font-family: 'Libre Franklin', 'Arial', 'sans-serif';
   --font-weight: 400;
   --font-size: 16px;

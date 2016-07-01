@@ -13,22 +13,31 @@
 <body>
     <div class="body-inner-container">
         <div class="site-heading-container">
-            <h1 class="site-heading"><?php echo $package->name ?> <span class="npm-version"><?php echo $package->version ?></span></h1>
-            <div class="site-slogan"><?php echo $package->description ?></div>
-            <div class="site-heading-menu">
-                <div class="site-heading-menu-item"><a class="site-heading-menu-link button" href="https://www.npmjs.com/package/mwyatt-dialogue" target="_blank">NPM</a></div>
-                <div class="site-heading-menu-item"><a class="site-heading-menu-link button" href="<?php echo $package->homepage ?>" target="_blank">Github</a></div>
+            <div class="panel-spacing-bottom">
+                <h1 class="site-heading"><?php echo $package->name ?> <span class="npm-version"><?php echo $package->version ?></span></h1>
+                <div class="site-slogan"><?php echo str_replace(' http://mwyatt.github.io/dialogue/', '', $package->description) ?></div>
             </div>
+            <div class="site-heading-menu panel-spacing-bottom">
+                <div class="site-heading-menu-item"><a class="site-heading-menu-link" href="https://www.npmjs.com/package/mwyatt-dialogue" target="_blank">NPM</a></div>
+                <div class="site-heading-menu-item"><a class="site-heading-menu-link" href="<?php echo $package->homepage ?>" target="_blank">Github</a></div>
+            </div>
+        </div>
+        <div class="panel-spacing-bottom">
+            <h2 class="demo-heading">Demo</h2>
             <nav class="demos-container">
-                <button class="button demo-dialogue js-dialogue-1">Basic</button>
-                <button class="button demo-dialogue js-dialogue-2">Inline Position</button>
-                <button class="button demo-dialogue js-dialogue-3">Hard Close</button>
-                <button class="button demo-dialogue js-dialogue-5">Ajax</button>
-                <button class="button demo-dialogue js-dialogue-6">Auto Width</button>
-                <button class="button demo-dialogue js-dialogue-7">Actions</button>
-                <button class="button demo-dialogue js-dialogue-8">
+                <button class="demo-dialogue js-dialogue-1">Basic</button>
+                <button class="demo-dialogue js-dialogue-2">Inline Position</button>
+                <button class="demo-dialogue js-dialogue-3">Hard Close</button>
+                <button class="demo-dialogue js-dialogue-5">Ajax</button>
+                <button class="demo-dialogue js-dialogue-6">Auto Width</button>
+                <button class="demo-dialogue js-dialogue-7">Actions</button>
+                <button class="demo-dialogue js-dialogue-8">
                 Draggable</button>
             </nav>
+        </div>
+        <div class="panel-spacing-bottom">
+            <h2 class="demo-heading">Author</h2>
+            <a href="<?php echo $package->homepage ?>" target="_blank" class="link">mwyatt</a>
         </div>
     </div>
     <script src="asset/common.bundle.js?<?php echo filemtime('asset/common.bundle.js') ?>"></script>

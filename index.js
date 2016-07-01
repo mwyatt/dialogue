@@ -124,7 +124,8 @@ Dialogue.prototype.create = function(options) {
   this.dialogue = this.container.querySelector(class_(classNames.dialogue));
   this.dialogueHtml = this.container.querySelector(class_(classNames.dialogueHtml));
 
-  // this.dialogue.focus();
+  // blur the element used to open this dialogue, as enter key could be pressed once the dialogue is open and open it again
+  document.activeElement.blur();
 
   if (this.options.mask) {
     this.dialogueMask = this.container.querySelector(class_(classNames.dialogueMask));
