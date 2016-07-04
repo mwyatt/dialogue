@@ -39,6 +39,9 @@
             <h2 class="demo-heading">Author</h2>
             <a href="<?php echo $package->homepage ?>" target="_blank" class="link">mwyatt</a>
         </div>
+        <div class="panel-tester">
+            <span class="js-test-me">Positional Far Down</span>
+        </div>
     </div>
     <script src="asset/common.bundle.js?<?php echo filemtime('asset/common.bundle.js') ?>"></script>
 </body>

@@ -6,6 +6,14 @@ var dialogueSecondary = new dialogueFactory();
 
 ready(function() {
 
+  document.querySelector('.js-test-me').addEventListener('click', function() {
+    dialogue.create({
+      title: 'Testing positioned on tall page',
+      positionTo: this,
+      width: 150
+    });
+  });
+
   document.querySelector('.js-dialogue-8').addEventListener('click', function() {
     dialogue.create({
       title: 'Draggable',

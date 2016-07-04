@@ -94,7 +94,7 @@
     animation-delay: 500ms;
     animation-fill-mode: forwards;
 
-    padding: 10%;
+    padding: 5%;
         max-width: 1024px;
         margin: 0 auto;
 }
@@ -122,7 +122,7 @@
         color: #fff;
         font-size: 32px;
         font-weight: 100;
-        background-color: coral;
+        background-color: var(--color-primary-0);
 }
 
 .site-heading {
@@ -151,41 +151,33 @@
 }
 
 .site-heading-menu-link {
-    box-shadow: 0 2px 0 #ccc;
+    background: linear-gradient(#fff, var(--color-secondary-3-0));
+    box-shadow: 0 2px 0 var(--color-secondary-2-2);
     transition-property: border-color;
     transition-property: color;
     transition-duration: 200ms;
     transition-timing-function: ease;
     display: block;
-    border: 1px solid #ccc;
+    color: var(--color-secondary-2-2);
+    border: 1px solid var(--color-secondary-2-2);
     border-radius: 3px;
     padding: 20px;
     font-size: 21px;
     font-weight: 400;
-    color: #666;
     text-align: center;
 }
 
 /*.site-heading-menu-link:active,*/
 .site-heading-menu-link:hover {
-    box-shadow: 0 2px 0 coral;
-    border-color: coral;
-    color: coral;
+    box-shadow: 0 2px 0 var(--color-primary-0);
+    border-color: var(--color-primary-0);
+    color: var(--color-primary-0);
 }
 
 .site-heading-menu-link:active {
     box-shadow: none;
     transform: translateY(2px);
 }
-
-
-
-.site-heading-menu {
-}
-
-.site-heading-menu-item {
-}
-
 
 .site-heading {
     margin-bottom: 6px;
@@ -205,4 +197,8 @@
     text-align: center;
     margin-bottom: 24px;
     color: #666;
+}
+
+html {
+    background-color: var(--color-secondary-2-4);
 }

@@ -15,12 +15,17 @@ var classNames = {
 };
 var docBody = document.querySelector('body');
 
-// checks if el is inside a target class
+// checks if el is inside a parent el
 // if there is no HTML element this will explode.
-var isInside = function(el, parentClass) {
-  while (el.tagName !== 'HTML') {
+var isInside = function(el, parentEl) {
+  
+  if (el == parentEl || el.tagName == 'HTML') {
+    return true;
+  }
+
+  while (el.tagName !== 'BODY') {
        
-    if (el.parentNode.classList.contains(parentClass)) {
+    if (el.parentNode == parentEl) {
       return true;
     }
        
@@ -132,7 +137,7 @@ Dialogue.prototype.create = function(options) {
   };
 
   if (this.options.draggable) {
-    new draggable (this.dialogue, {
+    new draggable(this.dialogue, {
       filterTarget: function(target) {
         return target.classList.contains('js-dialogue-draggable-handle');
       }
@@ -141,6 +146,7 @@ Dialogue.prototype.create = function(options) {
 
   if (!dialoguesOpen.length) {
     document.addEventListener('keyup', handleKeyup);
+    document.addEventListener('mousedown', handleMousedown);
   }
 
   setEvents(this);
@@ -159,28 +165,37 @@ Dialogue.prototype.create = function(options) {
 function handleKeyup(event) {
   
   if (event.which == keyCode.esc) {
-    var dialogue = dialoguesOpen[dialoguesOpen.length - 1];
+    var dialogue = getDialogueCurrent();
+    closeInstance(dialogue);
+  }
+}
+
+function getDialogueCurrent() {
+  var key = dialoguesOpen.length - 1;
+  if (key in dialoguesOpen) {
+    return dialoguesOpen[key];
+  }
+}
+
+/**
+ * clicking anything not inside the most current dialogue
+ */
+function handleMousedown(event) {
+
+  // get currently open dialogue
+  var dialogue = getDialogueCurrent();
+
+  if (dialogue.options.hardClose) {
+    return;
+  }
+
+  var result = isInside(event.target, dialogue.dialogue);
+  if (!result) {
     closeInstance(dialogue);
   }
 }
 
 function setEvents(dialogue) {
-
-  // not hard to close
-  if (!dialogue.options.hardClose) {
-
-    // mousedown outside of dialogue, down used because when
-    // clicking and dragging an input value will close it
-    dialogue.container.addEventListener('mousedown', function(event) {
-      if (event.target.classList.contains(classNames.dialogue)) {
-        return;
-      }
-      var result = isInside(event.target, classNames.dialogue);
-      if (!result) {
-        closeInstance(dialogue);
-      }
-    });
-  };
 
   // option actions [ok, cancel]
   if (dialogue.options.actions) {
@@ -329,6 +344,7 @@ function closeInstance(dialogue) {
 
   if (!dialoguesOpen.length) {
     document.removeEventListener('keyup', handleKeyup);
+    document.removeEventListener('mousedown', handleMousedown);
   }
 
   // .off('click.dialogue.action')

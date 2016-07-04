@@ -50,7 +50,7 @@
   padding: 20px;
   z-index: 2;
   /*border: 1px solid rgba(#000, .2);*/
-  animation: bringIn 500ms forwards;
+  animation: bringInPanel 300ms forwards;
   border-radius: var(--border-radius);
 }
 
