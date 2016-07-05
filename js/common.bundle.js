@@ -1,10 +1,10 @@
 var dialogueFactory = require('./dialogue');
-var ready = require('./ready');
+var domready = require('domready');
 
 var dialogue = new dialogueFactory();
 var dialogueSecondary = new dialogueFactory();
 
-ready(function() {
+domready(function() {
 
   document.querySelector('.js-test-me').addEventListener('click', function() {
     dialogue.create({
