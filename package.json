@@ -19,13 +19,13 @@
   "homepage": "https://github.com/mwyatt/dialogue#readme",
   "dependencies": {
     "browserify": "11.2.0",
-    "domready": "^1.0.8",
     "draggable": "^4.0.4",
     "extend": "^3.0.0",
     "mustache": "~2.2.1",
     "stringify": "5.1.0"
   },
   "devDependencies": {
+    "domready": "^1.0.8",
     "autoprefixer": "6.0.3",
     "es6-promise": "^3.0.2",
     "gulp": "3.9.0",
