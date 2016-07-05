@@ -1,20 +1,3 @@
-require('es6-promise').polyfill(); // required to fix postcss-import?
-
-var assetDest = 'asset/';
-var jsSitemaps = false;
-var settings = {
-  watch: {
-    css: 'css/**/*.css',
-    js: 'js/**/*.js'
-  },
-  jsLibs: [
-    'node_modules/mustache/mustache.js'
-  ],
-  css: 'css/',
-  js: 'js/',
-  media: ['media/']
-};
-
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var gulpConcat = require('gulp-concat');
@@ -34,6 +17,10 @@ var postcssColorFunction = require('postcss-color-function');
 var postcssHexrgba = require('postcss-hexrgba');
 var postcssConditionals = require('postcss-conditionals');
 var postcssCustomProperties = require('postcss-custom-properties');
+var browserify = require('browserify');
+var stringify = require('stringify');
+var buffer = require('gulp-buffer');
+
 var postcssProcesses = [
   postcssImport,
   postcssCustomProperties(),
@@ -42,10 +29,10 @@ var postcssProcesses = [
   postcssColorFunction(),
   autoprefixer({browsers: ['last 1 version']})
 ];
-var browserify = require('browserify');
-var stringify = require('stringify');
-var buffer = require('gulp-buffer');
+var assetDest = 'asset/';
+var jsSitemaps = true;
 
+gulp.task('default', buildProduction);
 gulp.task('watch', watch);
 gulp.task('min', min);
 gulp.task('css', css);
@@ -58,6 +45,20 @@ gulp.task('jsTidy', jsTidy);
 gulp.task('mediaTidy', mediaTidy);
 gulp.task('copy', copy);
 
+function buildProduction() {
+  jsSitemaps = false;
+  runSequence(
+    'mediaTidy',
+    'copy',
+    'cssTidy',
+    'css',
+    'cssMin',
+    'jsTidy',
+    'js',
+    'jsMin'
+  );
+}
+
 function min() {
   runSequence(
     'cssMin',
@@ -66,12 +67,12 @@ function min() {
 }
 
 function watch() {
-  gulp.watch(settings.watch.css, ['css']);
-  gulp.watch(settings.watch.js, ['index.js']);
+  gulp.watch('css/**/*.css', ['css']);
+  gulp.watch('js/**/*.js', ['index.js']);
 }
 
 function js() {
-  return gulp.src(settings.js + '**/*.bundle.js', {read: false})
+  return gulp.src('js/' + '**/*.bundle.js', {read: false})
     .pipe(tap(function(file) {
       file.contents = browserify(file.path, {debug: jsSitemaps})
         .transform(stringify, {
@@ -87,7 +88,7 @@ function js() {
 };
 
 function css() {
-  return gulp.src(settings.css + '**/*.bundle.css')
+  return gulp.src('css/' + '**/*.bundle.css')
     .pipe(postcss(postcssProcesses))
     .pipe(tap(function(file) {
       gutil.log('build ' + file.path);
@@ -105,7 +106,7 @@ function cssMin() {
 }
 
 function cssTidy() {
-  return gulp.src(settings.css + '**/*.css')
+  return gulp.src('css/' + '**/*.css')
     .pipe(postcss([postcssCsscomb(postcssCombOptions)]))
     .pipe(tap(function(file) {
       gutil.log('tidy ' + file.path);
@@ -114,7 +115,9 @@ function cssTidy() {
 }
 
 function jsLib() {
-  gulp.src(settings.jsLibs)
+  gulp.src([
+      'node_modules/mustache/mustache.js'
+    ])
     .pipe(tap(function(file) {
       gutil.log('concat ' + file.path);
     }))
@@ -132,7 +135,7 @@ function jsMin() {
 }
 
 function jsTidy() {
-  return gulp.src([settings.js + '**/*.js'])
+  return gulp.src(['js/' + '**/*.js'])
     .pipe(jscs({
       configPath: '.jsTidyGoogle.json',
       fix: true
@@ -141,7 +144,7 @@ function jsTidy() {
 }
 
 function mediaTidy() {
-  return gulp.src(settings.media + '**')
+  return gulp.src('media/' + '**')
     .pipe(imagemin({
       progressive: true,
       svgoPlugins: [{removeViewBox: false}],
@@ -151,5 +154,5 @@ function mediaTidy() {
 }
 
 function copy() {
-  gulp.src(settings.media + '**').pipe(gulp.dest(assetDest));
+  gulp.src('media/' + '**').pipe(gulp.dest(assetDest));
 }
