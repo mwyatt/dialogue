@@ -1,4 +1,4 @@
-var dialogueFactory = require('../index');
+var dialogueFactory = require('./dialogue');
 var ready = require('./ready');
 
 var dialogue = new dialogueFactory();

@@ -18,17 +18,17 @@ var docBody = document.querySelector('body');
 // checks if el is inside a parent el
 // if there is no HTML element this will explode.
 var isInside = function(el, parentEl) {
-  
+
   if (el == parentEl || el.tagName == 'HTML') {
     return true;
   }
 
   while (el.tagName !== 'BODY') {
-       
+
     if (el.parentNode == parentEl) {
       return true;
     }
-       
+
     el = el.parentNode;
   }
 };
@@ -105,7 +105,7 @@ Dialogue.prototype.create = function(options) {
     onComplete: function() {}, // fired when dialogue has been rendered
     onClose: function() {} // fired when dialogue has been closed
   };
-  
+
   extend(optionsTemplate, options);
 
   this.options = optionsTemplate;
@@ -163,7 +163,7 @@ Dialogue.prototype.create = function(options) {
 };
 
 function handleKeyup(event) {
-  
+
   if (event.which == keyCode.esc) {
     var dialogue = getDialogueCurrent();
     closeInstance(dialogue);
@@ -241,12 +241,11 @@ function parsePx(int) {
 }
 
 function getStyle(oElm, strCssRule) {
-  var strValue = "";
-  if(document.defaultView && document.defaultView.getComputedStyle){
-    strValue = document.defaultView.getComputedStyle(oElm, "").getPropertyValue(strCssRule);
-  }
-  else if(oElm.currentStyle){
-    strCssRule = strCssRule.replace(/\-(\w)/g, function (strMatch, p1){
+  var strValue = '';
+  if (document.defaultView && document.defaultView.getComputedStyle) {
+    strValue = document.defaultView.getComputedStyle(oElm, '').getPropertyValue(strCssRule);
+  } else if (oElm.currentStyle) {
+    strCssRule = strCssRule.replace(/\-(\w)/g, function(strMatch, p1) {
       return p1.toUpperCase();
     });
     strValue = oElm.currentStyle[strCssRule];
