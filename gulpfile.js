@@ -1,7 +1,7 @@
 require('es6-promise').polyfill(); // required to fix postcss-import?
 
 var assetDest = 'asset/';
-var jsSitemaps = true;
+var jsSitemaps = false;
 var settings = {
   watch: {
     css: 'css/**/*.css',
@@ -43,6 +43,7 @@ var postcssProcesses = [
   autoprefixer({browsers: ['last 1 version']})
 ];
 var browserify = require('browserify');
+var stringify = require('stringify');
 var buffer = require('gulp-buffer');
 
 gulp.task('watch', watch);
@@ -73,6 +74,11 @@ function js() {
   return gulp.src(settings.js + '**/*.bundle.js', {read: false})
     .pipe(tap(function(file) {
       file.contents = browserify(file.path, {debug: jsSitemaps})
+        .transform(stringify, {
+          global: true,
+          appliesTo: {includeExtensions: ['.mst', '.mustache']},
+          minify: true
+        })
         .bundle();
       gutil.log('build ' + file.path);
     }))
