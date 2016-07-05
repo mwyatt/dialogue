@@ -2,7 +2,7 @@ var mustache = require('mustache');
 var draggable = require('draggable');
 var extend = require('extend');
 var dialoguesOpen = [];
-var templateContainer = require('./js/container.mustache');
+var templateContainer = require('./container.mustache');
 var keyCode = {
   esc: 27
 };
