@@ -18,6 +18,10 @@
   }
 }
 
+html {
+    background-color: #fff;
+}
+
 .dialogue-title {
     font-size: 18px;
     font-weight: 600;
@@ -61,29 +65,15 @@
     text-align: center;
     min-height: 100px;
     background-color: #fff;
-    border: 1px solid #ccc;
-    color: #666;
+    border: 1px solid;
     font-weight: 400;
     opacity: .7;
-    transition-property: opacity;
-    transition-property: transform;
-    transition-duration: 200ms;
-    transition-timing-function: ease;
 }
 
 .demo-dialogue:hover {
     opacity: 1;
-}
-
-
-.dialogue .button {
-    padding: 6px 9px;
-    color: #fff;
-    border-radius: var(--border-radius);
-}
-
-.dialogue .button:focus {
-    box-shadow: 0 0 3px var(--color-secondary-1-0);
+    border-color: var(--color-primary-0);
+    color: var(--color-primary-0);
 }
 
 .body-inner-container {
@@ -110,7 +100,6 @@
 .site-slogan {
     font-size: 18px;
     text-align: center;
-    color: #8c8c8c;
 }
 
 
@@ -122,7 +111,7 @@
         color: #fff;
         font-size: 32px;
         font-weight: 100;
-        background-color: var(--color-primary-0);
+        background: var(--color-primary-0);
 }
 
 .site-heading {
@@ -151,15 +140,11 @@
 }
 
 .site-heading-menu-link {
-    background: linear-gradient(#fff, var(--color-secondary-3-0));
-    box-shadow: 0 2px 0 var(--color-secondary-2-2);
-    transition-property: border-color;
-    transition-property: color;
-    transition-duration: 200ms;
-    transition-timing-function: ease;
+    background: #fff;
+    box-shadow: 0 2px 0 var(--color-primary-0);
     display: block;
-    color: var(--color-secondary-2-2);
-    border: 1px solid var(--color-secondary-2-2);
+    color: var(--color-primary-0);
+    border: 1px solid var(--color-primary-0);
     border-radius: 3px;
     padding: 20px;
     font-size: 21px;
@@ -167,11 +152,12 @@
     text-align: center;
 }
 
-/*.site-heading-menu-link:active,*/
 .site-heading-menu-link:hover {
-    box-shadow: 0 2px 0 var(--color-primary-0);
+    box-shadow: 0 3px 0 var(--color-primary-0);
+    transform: translateY(-1px);
     border-color: var(--color-primary-0);
-    color: var(--color-primary-0);
+    color: var(--color-primary-1);
+    background: #fff;
 }
 
 .site-heading-menu-link:active {
@@ -196,9 +182,4 @@
     font-weight: 100;
     text-align: center;
     margin-bottom: 24px;
-    color: #666;
-}
-
-html {
-    background-color: var(--color-secondary-2-4);
 }
