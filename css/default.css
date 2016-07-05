@@ -50,7 +50,7 @@
   z-index: 2;
   animation: bringIn 300ms forwards;
   border-radius: var(--border-radius);
-  box-shadow: 0 8px 30px rgba(#000, .1);
+  box-shadow: 0 8px 30px rgba(#000000, 0.1);
   border: 1px solid var(--color-primary-0);
 }
 
@@ -66,7 +66,7 @@
   height: 40px;
   padding: 10px;
   cursor: pointer;
-  opacity: .7;
+  opacity: 0.7;
   color: var(--color-primary-0);
 }
 
@@ -93,7 +93,7 @@
 }
 
 .dialogue-spinner-container {
-  padding: 20px 0px;
+  padding: 20px 0;
 }
 
 .dialogue-spinner {
@@ -141,16 +141,16 @@
 }
 
 .dialogue-draggable-handle:hover {
-  background-color: rgba(var(--color-primary-0), .2);
+  background-color: rgba(var(--color-primary-0), 0.2);
 }
 
 .dialogue .button {
-    padding: 6px 9px;
-    color: #fff;
-    border-radius: var(--border-radius);
+  padding: 6px 9px;
+  color: #ffffff;
+  border-radius: var(--border-radius);
 }
 
 .dialogue .button:focus {
-    box-shadow: 0 2px 0 var(--color-primary-1);
-    outline: none;
+  box-shadow: 0 2px 0 var(--color-primary-1);
+  outline: none;
 }
