@@ -37,7 +37,7 @@
         </div>
         <div class="panel-spacing-bottom">
             <h2 class="demo-heading">Author</h2>
-            <a href="<?php echo $package->homepage ?>" target="_blank" class="link">mwyatt</a>
+            <a href="<?php echo 'https://github.com/mwyatt/' ?>" target="_blank" class="link">mwyatt</a>
         </div>
         <div class="panel-tester hidden">
             <span class="js-test-me">Positional Far Down</span>
