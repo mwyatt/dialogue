@@ -77,13 +77,13 @@ html {
 }
 
 .body-inner-container {
-  opacity: 0;
-  animation-name: bringInPanel;
+  /*opacity: 0;*/
+  /*  animation-name: bringInPanel;
   animation-timing-function: ease;
   animation-duration: 500ms;
   animation-delay: 500ms;
   animation-fill-mode: forwards;
-  padding: 5%;
+*/  padding: 5%;
   max-width: 1024px;
   margin: 0 auto;
 }
@@ -127,15 +127,13 @@ html {
 .site-heading-menu {
   margin: 1em 0;
   display: flex;
-  margin: 1em -10px;
+  /*margin: 1em -10px;*/
   justify-content: center;
 }
 
 .site-heading-menu-item {
-  flex-basis: 120px;
-  max-width: 150px;
+  flex-basis: 200px;
   margin: 0 10px;
-  flex: 1;
 }
 
 .site-heading-menu-link {

@@ -240,19 +240,6 @@ function parsePx(int) {
   return int + 'px';
 }
 
-function getStyle(oElm, strCssRule) {
-  var strValue = '';
-  if (document.defaultView && document.defaultView.getComputedStyle) {
-    strValue = document.defaultView.getComputedStyle(oElm, '').getPropertyValue(strCssRule);
-  } else if (oElm.currentStyle) {
-    strCssRule = strCssRule.replace(/\-(\w)/g, function(strMatch, p1) {
-      return p1.toUpperCase();
-    });
-    strValue = oElm.currentStyle[strCssRule];
-  }
-  return strValue;
-}
-
 // apply the css to the dialogue to position correctly
 function applyCssPosition(dialogue) {
   var positionalEl = dialogue.options.positionTo;
@@ -273,8 +260,8 @@ function applyCssPosition(dialogue) {
     height: window.innerHeight,
     width: window.innerWidth
   };
-  var borderWidth = parseInt(getStyle(dialogue.dialogue, 'border-width'));
-  var dialogueHeight = parseInt(dialogue.dialogue.offsetHeight) + (borderWidth * 2);
+
+  var dialogueHeight = parseInt(dialogue.dialogue.offsetHeight);
 
   // position container
   dialogue.container.style.top = parsePx(clientFrame.positionVertical);
@@ -303,7 +290,8 @@ function applyCssPosition(dialogue) {
     cssSettings.marginRight = 'auto';
     cssSettings.marginBottom = 0;
     cssSettings.marginLeft = 'auto';
-
+    console.log(dialogueHeight);
+    console.log(clientFrame);
     // center vertically if there is room
     // otherwise send to top and then just scroll
     if (dialogueHeight < clientFrame.height) {
@@ -322,6 +310,7 @@ function applyCssPosition(dialogue) {
   dialogue.dialogue.style.marginBottom = parsePx(cssSettings.marginBottom);
   dialogue.dialogue.style.marginLeft = parsePx(cssSettings.marginLeft);
   dialogue.dialogue.style.maxWidth = parsePx(cssSettings.maxWidth);
+  console.log(cssSettings);
 };
 
 /**
