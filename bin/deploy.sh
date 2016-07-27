@@ -5,5 +5,6 @@ then
   exit 1
 fi
 php index.php > $1/index.html
-sudo cp -r asset $1/asset
+cp -r asset/ $1/
+git commit dist/ -m "deploy"
 git subtree push --prefix $1 origin gh-pages

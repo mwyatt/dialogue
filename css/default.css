@@ -9,27 +9,27 @@
 
 @keyframes bringIn {
   from {
-    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 45deg);
     animation-timing-function: ease-in;
     opacity: 0;
   }
 
   40% {
-    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -10deg);
     animation-timing-function: ease-in;
   }
 
   60% {
-    transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, 5deg);
     opacity: 1;
   }
 
   80% {
-    transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+    transform: perspective(400px) rotate3d(1, 0, 0, -2deg);
   }
 
   to {
-    transform: perspective(400px) rotate3d(1, 1, 0, 0);
+    transform: perspective(400px) rotate3d(1, 1, 0, 0) translate3d(0,0,1px);
   }
 }
 
@@ -40,32 +40,38 @@
   right: 0;
   bottom: 0;
   z-index: 1;
-  background-color: rgba(#eeeeee, 0.5);
+  background-color: rgba(var(--color-primary-0), 0.5);
 }
 
 .dialogue {
   position: relative;
   background-color: #ffffff;
-  box-shadow: 0 0 3px rgba(#000, .2);
   padding: 20px;
   z-index: 2;
-  /*border: 1px solid rgba(#000, .2);*/
-  animation: bringIn 500ms forwards;
+  animation: fadeInTop 300ms forwards;
   border-radius: var(--border-radius);
+  box-shadow: 0 8px 30px rgba(#000000, 0.1);
+  border: 1px solid var(--color-primary-0);
 }
 
 .dialogue-close {
   position: absolute;
   top: 0;
   right: 0;
-  line-height: 0.6;
-  font-size: 26px;
+  line-height: 0.7;
+  font-size: 31px;
   font-weight: 100;
-  width: 35px;
+  width: 40px;
   text-align: center;
-  height: 35px;
+  height: 40px;
   padding: 10px;
   cursor: pointer;
+  opacity: 0.7;
+  color: var(--color-primary-0);
+}
+
+.dialogue-close:hover {
+  opacity: 1;
 }
 
 .dialogue-action {
@@ -87,7 +93,7 @@
 }
 
 .dialogue-spinner-container {
-  padding: 20px 0px;
+  padding: 20px 0;
 }
 
 .dialogue-spinner {
@@ -95,10 +101,10 @@
   animation: rotation 0.5s infinite linear;
   height: 26px;
   width: 26px;
-  border-left-color: #cccccc;
-  border-right-color: #cccccc;
-  border-bottom-color: #cccccc;
-  border-top-color: #eeeeee;
+  border-left-color: var(--color-primary-0);
+  border-right-color: var(--color-primary-0);
+  border-bottom-color: var(--color-primary-0);
+  border-top-color: var(--color-primary-3);
   border-radius: 100%;
   border-width: 4px;
   border-style: solid;
@@ -114,10 +120,10 @@
   animation: rotation 0.5s infinite linear;
   height: 26px;
   width: 26px;
-  border-left-color: #cccccc;
-  border-right-color: #cccccc;
-  border-bottom-color: #cccccc;
-  border-top-color: #eeeeee;
+  border-left-color: var(--color-primary-0);
+  border-right-color: var(--color-primary-0);
+  border-bottom-color: var(--color-primary-0);
+  border-top-color: var(--color-primary-3);
   border-radius: 100%;
   border-width: 4px;
   border-style: solid;
@@ -128,12 +134,23 @@
   top: 0;
   right: 0;
   left: 0;
-  height: 50px;
+  height: 20px;
   cursor: move;
   transition-property: background-color;
   transition-duration: 200ms;
 }
 
 .dialogue-draggable-handle:hover {
-  background-color: rgba(#000, .5);
+  background-color: rgba(var(--color-primary-0), 0.2);
+}
+
+.dialogue .button {
+  padding: 6px 9px;
+  color: #ffffff;
+  border-radius: var(--border-radius);
+}
+
+.dialogue .button:focus {
+  box-shadow: 0 2px 0 var(--color-primary-1);
+  outline: none;
 }

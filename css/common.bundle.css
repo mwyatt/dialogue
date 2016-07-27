@@ -9,119 +9,174 @@
 @import 'mwyatt-codex/css/button.css';
 @import 'default.css';
 
-.site-heading-menu {
-    min-height: 80px;
+@keyframes bringInPanel {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+html {
+  background-color: #ffffff;
 }
 
 .dialogue-title {
-    font-size: 18px;
-    font-weight: 600;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .dialogue-description {
-    margin: 1em 0;
-    line-height: 1.5;
+  margin: 1em 0;
+  line-height: 1.5;
 }
 
 .dialogue-actions {
-    height: 28px;
+  height: 28px;
 }
 
 .demos-container {
-    display: flex;
-    flex-wrap: wrap;
-    margin: -10px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: -10px;
 }
 
 .demo-single {
-    min-width: 300px;
-    max-width: 600px;
-    width: 50%;
-    padding: 1em;
-    flex-grow: 1;
-    border: 1px solid blue;
+  min-width: 300px;
+  max-width: 600px;
+  width: 50%;
+  padding: 1em;
+  flex-grow: 1;
+  border: 1px solid blue;
 }
 
-.button.demo-dialogue {
-    flex-grow: 1;
-    flex-basis: 200px;
-    background: rgba(#fff, .3);
-    color: #fff;
-    border-radius: 3px;
-    padding: 24px;
-    width: 100%;
-    text-align: left;
-    font-size: 20px;
-    margin: 10px;
+.demo-dialogue {
+  cursor: pointer;
+  line-height: 1;
+  display: inline-block;
+  flex-grow: 1;
+  flex-basis: 200px;
+  border-radius: 3px;
+  padding: 24px;
+  width: 100%;
+  font-size: 20px;
+  margin: 10px;
+  text-align: center;
+  min-height: 100px;
+  background-color: #ffffff;
+  border: 1px solid;
+  font-weight: 400;
+  opacity: 0.7;
 }
 
-.dialogue .button {
-    padding: 6px 9px;
-    color: #fff;
-    border-radius: var(--border-radius);
+.demo-dialogue:hover {
+  opacity: 1;
+  border-color: var(--color-primary-0);
+  color: var(--color-primary-0);
 }
 
-.dialogue .button:focus {
-    box-shadow: 0 0 3px var(--color-secondary-1-0);
-}
-
-.site-heading-container {
-    padding: 10%;
+.body-inner-container {
+  /*opacity: 0;*/
+  /*  animation-name: bringInPanel;
+  animation-timing-function: ease;
+  animation-duration: 500ms;
+  animation-delay: 500ms;
+  animation-fill-mode: forwards;
+*/  padding: 5%;
+  max-width: 1024px;
+  margin: 0 auto;
 }
 
 .site-heading {
-    font-weight: 100;
-    font-size: 26px;
-    text-align: center;
-    margin-bottom: 22px;
+  line-height: 1.3;
+  font-weight: 100;
+  font-size: 26px;
+  text-align: center;
+  margin-bottom: 22px;
 }
 
 .site-slogan {
-    font-size: 18px;
-    text-align: center;
-    color: #8c8c8c;
+  font-size: 18px;
+  text-align: center;
 }
+
 
 .npm-version {
-    border: 1px dashed #ccc;
-    padding: 0 8px;
-    border-radius: 3px;
-    color: #9e9e9e;
-    margin-left: 6px;
-}
-
-.site-heading-menu {
-    text-align: center;
-}
-
-.site-heading-menu-item {
-    float: left;
+  border-radius: 100px;
+  padding: 2px 10px;
+  color: #9e9e9e;
+  margin-left: 6px;
+  color: #ffffff;
+  font-size: 32px;
+  font-weight: 100;
+  background: var(--color-primary-0);
 }
 
 .site-heading {
-    font-weight: 300;
-    font-size: 44px;
-    margin-bottom: 28px;
+  font-weight: 300;
+  font-size: 44px;
+  margin-bottom: 28px;
 }
 
 .site-slogan {
-    font-size: 21px;
-    font-weight: 100;
-}
-
-.button.demo-dialogue {
-    background: #eee;
-    color: #666;
-    text-align: center;
-    border-radius: 3px;
-    min-height: 100px;
+  font-size: 21px;
+  font-weight: 100;
 }
 
 .site-heading-menu {
-    margin: 1em 0;
-    min-height: auto;
+  margin: 1em 0;
+  display: flex;
+  /*margin: 1em -10px;*/
+  justify-content: center;
 }
 
 .site-heading-menu-item {
-    float: none;
+  flex-basis: 200px;
+  margin: 0 10px;
+}
+
+.site-heading-menu-link {
+  background: #ffffff;
+  box-shadow: 0 2px 0 var(--color-primary-0);
+  display: block;
+  color: var(--color-primary-0);
+  border: 1px solid var(--color-primary-0);
+  border-radius: 3px;
+  padding: 20px;
+  font-size: 21px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.site-heading-menu-link:hover {
+  box-shadow: 0 3px 0 var(--color-primary-0);
+  transform: translateY(-1px);
+  border-color: var(--color-primary-0);
+  color: var(--color-primary-1);
+  background: #ffffff;
+}
+
+.site-heading-menu-link:active {
+  box-shadow: none;
+  transform: translateY(2px);
+}
+
+.site-heading {
+  margin-bottom: 6px;
+}
+
+.site-slogan {
+  margin: 6px 0;
+}
+
+.panel-spacing-bottom {
+  margin-bottom: 50px;
+}
+
+.demo-heading {
+  font-size: 26px;
+  font-weight: 100;
+  text-align: center;
+  margin-bottom: 24px;
 }
