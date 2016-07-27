@@ -207,7 +207,8 @@ function setEvents(dialogue) {
     };
 
     if (lastButton) {
-      lastButton.focus();
+      // lastButton.focus();
+      // causing to jump up the page before dialogue in position
     }
   };
 
@@ -290,8 +291,7 @@ function applyCssPosition(dialogue) {
     cssSettings.marginRight = 'auto';
     cssSettings.marginBottom = 0;
     cssSettings.marginLeft = 'auto';
-    console.log(dialogueHeight);
-    console.log(clientFrame);
+
     // center vertically if there is room
     // otherwise send to top and then just scroll
     if (dialogueHeight < clientFrame.height) {
@@ -310,7 +310,6 @@ function applyCssPosition(dialogue) {
   dialogue.dialogue.style.marginBottom = parsePx(cssSettings.marginBottom);
   dialogue.dialogue.style.marginLeft = parsePx(cssSettings.marginLeft);
   dialogue.dialogue.style.maxWidth = parsePx(cssSettings.maxWidth);
-  console.log(cssSettings);
 };
 
 /**
