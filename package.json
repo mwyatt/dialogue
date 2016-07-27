@@ -1,7 +1,7 @@
 {
   "name": "mwyatt-dialogue",
   "main": "js/dialogue.js",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "author": "Martin Wyatt <martin.wyatt@gmail.com>",
   "description": "Simple, light and flexible js dialogue. http://mwyatt.github.io/dialogue/",
   "scripts": {
