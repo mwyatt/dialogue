@@ -3,7 +3,7 @@ var domready = require('domready');
 
 var dialogue = new dialogueFactory();
 var dialogueSecondary = new dialogueFactory();
-
+dialogue.close();
 domready(function() {
 
   document.querySelector('.js-test-me').addEventListener('click', function() {

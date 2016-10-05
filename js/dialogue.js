@@ -319,7 +319,8 @@ function applyCssPosition(dialogue) {
  */
 function closeInstance(dialogue) {
 
-  if (!dialoguesOpen.length) {
+  // none may be open yet, or one may be open but may be closing another which is not open
+  if (!dialoguesOpen.length || typeof dialogue.options.id === 'undefined') {
     return;
   }
 
