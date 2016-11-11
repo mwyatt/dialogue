@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mwyatt/dialogue.png?branch=master)](https://travis-ci.org/mwyatt/dialogue)
+
 # Demo
 Simple, light and flexible js dialogue.
 http://mwyatt.github.io/dialogue/
