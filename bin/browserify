@@ -4,3 +4,4 @@ browserify --debug -t [ stringify --extensions [.mustache] ] js/common.bundle.js
 
 //     "j": "browserify -d -t [ stringify --extensions [.mustache] ] js/common.bundle.js > asset/common.bundle.js",
     // "ju": "browserify -t [ stringify --extensions [.mustache] ] js/common.bundle.js | uglifyjs > asset/common.bundle.js",
+    
