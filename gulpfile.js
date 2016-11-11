@@ -6,8 +6,6 @@ var runSequence = require('run-sequence');
 var jscs = require('gulp-jscs');
 var uglify = require('gulp-uglify');
 var cssmin = require('gulp-cssmin');
-var imagemin = require('gulp-imagemin');
-var pngquant = require('imagemin-pngquant');
 var autoprefixer = require('autoprefixer');
 var postcss = require('gulp-postcss');
 var postcssImport = require('postcss-import');
@@ -42,13 +40,11 @@ gulp.task('js', js);
 gulp.task('jsLib', jsLib);
 gulp.task('jsMin', jsMin);
 gulp.task('jsTidy', jsTidy);
-gulp.task('mediaTidy', mediaTidy);
 gulp.task('copy', copy);
 
 function buildProduction() {
   jsSitemaps = false;
   runSequence(
-    'mediaTidy',
     'copy',
     'cssTidy',
     'css',
@@ -141,18 +137,4 @@ function jsTidy() {
       fix: true
     }))
     .pipe(gulp.dest('js'));
-}
-
-function mediaTidy() {
-  return gulp.src('media/' + '**')
-    .pipe(imagemin({
-      progressive: true,
-      svgoPlugins: [{removeViewBox: false}],
-      use: [pngquant()]
-    }))
-    .pipe(gulp.dest(assetDest));
-}
-
-function copy() {
-  gulp.src('media/' + '**').pipe(gulp.dest(assetDest));
 }
