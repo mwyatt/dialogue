@@ -40,12 +40,10 @@ gulp.task('js', js);
 gulp.task('jsLib', jsLib);
 gulp.task('jsMin', jsMin);
 gulp.task('jsTidy', jsTidy);
-gulp.task('copy', copy);
 
 function buildProduction() {
   jsSitemaps = false;
   runSequence(
-    'copy',
     'cssTidy',
     'css',
     'cssMin',
