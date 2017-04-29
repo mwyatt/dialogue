@@ -14,38 +14,13 @@ var classNames = {
   dialogueMask: 'js-dialogue-mask'
 };
 var docBody = document.querySelector('body');
-
-// checks if el is inside a parent el
-// if there is no HTML element this will explode.
-var isInside = function(el, parentEl) {
-
-  if (el == parentEl || el.tagName == 'HTML') {
-    return true;
-  }
-
-  while (el.tagName !== 'BODY') {
-
-    if (el.parentNode == parentEl) {
-      return true;
-    }
-
-    el = el.parentNode;
-  }
-};
+var helper = require('./helper');
 
 // obtains css selector version of a class name
 // how can this be done better?
 var class_ = function(className) {
   return '.' + className;
 };
-
-function getRandomString() {
-  var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-  for (var i = 0; i < 5; i++)
-  text += possible.charAt(Math.floor(Math.random() * possible.length));
-  return text;
-}
 
 // unchanging events
 // does event pass?
@@ -111,9 +86,9 @@ Dialogue.prototype.create = function(options) {
   this.options = optionsTemplate;
 
   // need to have a unique classname otherwise it cant be selected
-  this.options.className = this.options.className ? this.options.className : getRandomString();
+  this.options.className = this.options.className ? this.options.className : helper.getRandomString();
 
-  this.options.id = getRandomString();
+  this.options.id = helper.getRandomString();
 
   // for mustache template
   if (this.options.actions) {
@@ -189,7 +164,7 @@ function handleMousedown(event) {
     return;
   }
 
-  var result = isInside(event.target, dialogue.dialogue);
+  var result = helper.isInside(event.target, dialogue.dialogue);
   if (!result) {
     closeInstance(dialogue);
   }

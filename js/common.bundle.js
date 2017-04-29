@@ -61,15 +61,6 @@ domready(function() {
     });
   });
 
-  // document.querySelector('.js-dialogue-4').addEventListener('click', function() {
-  //   dialogue.create({
-  //     mask: true,
-  //     width: 550,
-  //     title: 'Very large',
-  //     html: '<p>If it is too large for the window to center in the middle. It will be placed at the top.</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p><p>Demo Line</p>'
-  //   });
-  // });
-
   document.querySelector('.js-dialogue-5').addEventListener('click', function() {
     dialogue.create({
       mask: true,
