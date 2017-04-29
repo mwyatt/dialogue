@@ -31,8 +31,8 @@
                 <button class="demo-dialogue js-dialogue-5">Ajax</button>
                 <button class="demo-dialogue js-dialogue-6">Auto Width</button>
                 <button class="demo-dialogue js-dialogue-7">Actions</button>
-                <button class="demo-dialogue js-dialogue-8">
-                Draggable</button>
+                <button class="demo-dialogue js-dialogue-9">Actions Advanced</button>
+                <button class="demo-dialogue js-dialogue-8">Draggable</button>
             </nav>
         </div>
         <div class="panel-spacing-bottom">

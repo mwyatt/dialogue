@@ -109,4 +109,29 @@ domready(function() {
       }
     });
   });
+
+  document.querySelector('.js-dialogue-9').addEventListener('click', function() {
+    dialogue.create({
+      title: 'Actions Advanced',
+      description: 'Below are actions which can have callbacks.',
+      mask: true,
+      width: 290,
+      actions: [
+        {
+          name: 'Open',
+          classes: ['button', 'primary', 'right'],
+          action: function() {
+            this.close();
+          }
+        },
+        {
+          name: 'Close',
+          classes: ['button', 'secondary', 'left'],
+          action: function() {
+            this.close();
+          }
+        },
+      ],
+    });
+  });
 });

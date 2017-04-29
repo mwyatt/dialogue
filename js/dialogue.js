@@ -90,13 +90,7 @@ Dialogue.prototype.create = function(options) {
 
   this.options.id = helper.getRandomString();
 
-  // for mustache template
-  if (this.options.actions) {
-    this.options.actionNames = [];
-    for (var actionName in this.options.actions) {
-      this.options.actionNames.push(actionName);
-    };
-  };
+  this.options.actionStyleNew = this.options.actions.length === undefined ? '' : true;
 
   docBody.insertAdjacentHTML('afterbegin', mustache.render(templateContainer, this.options));
 
@@ -172,18 +166,17 @@ function handleMousedown(event) {
 
 function setEvents(dialogue) {
 
-  // option actions [ok, cancel]
-  if (dialogue.options.actions) {
-    var lastButton;
-
+  // options
+  if (!dialogue.options.actionStyleNew && dialogue.options.actions) {
     for (var actionName in dialogue.options.actions) {
-      lastButton = dialogue.container.querySelector('.js-dialogue-action[data-name="' + actionName + '"]');
-      setActionEvent(dialogue, lastButton, dialogue.options.actions[actionName]);
+      var button = dialogue.container.querySelector('.js-dialogue-action[data-name="' + actionName + '"]');
+      setActionEvent(dialogue, button, dialogue.options.actions[actionName]);
     };
-
-    if (lastButton) {
-      // lastButton.focus();
-      // causing to jump up the page before dialogue in position
+  } else if (dialogue.options.actionStyleNew && dialogue.options.actions.length) {
+    for (var i = dialogue.options.actions.length - 1; i >= 0; i--) {
+      var action = dialogue.options.actions[i];
+      var button = dialogue.container.querySelector('.js-dialogue-action[data-name="' + action.name + '"]');
+      setActionEvent(dialogue, button, action.action);
     }
   };
 

@@ -1,7 +1,6 @@
 @charset 'utf-8';
 @import 'settings.css';
 @import 'mwyatt-codex/css/reset.css';
-@import 'mwyatt-codex/css/reusable.css';
 @import 'mwyatt-codex/css/keyframe.css';
 @import 'mwyatt-codex/css/form.css';
 @import 'mwyatt-codex/css/typography.css';
@@ -180,3 +179,5 @@ html {
   text-align: center;
   margin-bottom: 24px;
 }
+
+@import 'mwyatt-codex/css/reusable.css';

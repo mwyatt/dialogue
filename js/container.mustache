@@ -24,19 +24,36 @@
 
         <div class="dialogue-html js-dialogue-html">{{{html}}}</div>
 
-{{#actionNames.length}}
+{{#actionStyleNew}}
+    {{#actions.length}}
 
         <div class="dialogue-actions">
 
-    {{#actionNames}}
+        {{#actions}}
 
-            <button class="button primary dialogue-action js-dialogue-action" data-name="{{.}}">{{.}}</button>
+            <button class="{{#classes}}{{.}} {{/classes}}dialogue-action js-dialogue-action" data-name="{{name}}">{{name}}</button>
 
-    {{/actionNames}}
+        {{/actions}}
 
         </div>
 
-{{/actionNames.length}}
+    {{/actions.length}}
+{{/actionStyleNew}}
+{{^actionStyleNew}}
+    {{#actionNames.length}}
+
+        <div class="dialogue-actions">
+
+        {{#actionNames}}
+
+            <button class="button primary dialogue-action js-dialogue-action" data-name="{{.}}">{{.}}</button>
+
+        {{/actionNames}}
+
+        </div>
+
+    {{/actionNames.length}}
+{{/actionStyleNew}}
 
     </div>
 
